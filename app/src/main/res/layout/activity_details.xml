@@ -54,6 +54,56 @@
                 android:layout_height="wrap_content"
                 />
 
+
+            <EditText
+                android:id="@+id/etDetails"
+                android:layout_marginTop="50dp"
+                android:autofillHints="textNoSuggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/please_leave_any_comments_if_yoy_have"
+                android:inputType="text"
+                android:lines="3"
+                android:singleLine="false"
+                android:textAlignment="viewStart"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                tools:context="com.example.pager.MainActivity" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:text="@string/did_you_enjoy_the_movie" />
+
+                <CheckBox
+                    android:id="@+id/cbDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end" />
+
+            </LinearLayout>
+
+            <Button
+                android:text="@string/send_comments_back"
+                android:id="@+id/bntSendComments"
+                android:paddingVertical="8dp"
+                android:layout_gravity="bottom|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
         </LinearLayout>
 
     </ScrollView>

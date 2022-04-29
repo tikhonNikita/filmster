@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15628166160081053" />
-        <entry key="app/src/main/res/layout/activity_details.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_star_like.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_start.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_details.xml" value="0.4118886396338377" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
-        <entry key="app/src/main/res/layout/film_card.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/film_card.xml" value="0.6514938354492188" />
       </map>
     </option>
   </component>

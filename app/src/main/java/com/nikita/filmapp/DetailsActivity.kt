@@ -37,7 +37,11 @@ class DetailsActivity : AppCompatActivity() {
             this.onBackPressed()
         }
 
-
+        binding.bntSendComments.setOnClickListener {
+            val data = Intent()
+            data.putExtra(MainActivity.COMMENTS, "SOME DATA DATA")
+            setResult(RESULT_OK, data)
+        }
         setContentView(view)
     }
 

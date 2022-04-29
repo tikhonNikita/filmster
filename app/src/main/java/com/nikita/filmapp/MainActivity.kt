@@ -1,7 +1,12 @@
 package com.nikita.filmapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.databinding.ActivityMainBinding
@@ -36,10 +41,26 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        val startAnotherActivity = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val data = result.data
+            if (result.resultCode == RESULT_OK && data != null) {
+                val liked = data.getBooleanExtra(FILM_LIKED, false)
+                if (data.hasExtra(COMMENTS)) {
+                    val comments = data.getStringExtra(COMMENTS)
+                    Toast.makeText(this, "Film ${if (liked) "is" else "not"} " + comments, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+
+
         val view = binding.root
         setContentView(view)
-        initRecyclerView()
+        initRecyclerView(startAnotherActivity)
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -47,15 +68,21 @@ class MainActivity : AppCompatActivity() {
         outState.putString(FILMS_LIST, data)
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(activityStarter: ActivityResultLauncher<Intent>) {
         binding.rvFilmList.apply {
-            adapter = FilmsAdapter(filmList)
+            adapter = FilmsAdapter(filmList) {
+                val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                intent.putExtra(DetailsActivity.DATA_KEY, Json.encodeToString(it))
+                activityStarter.launch(intent)
+            }
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
     companion object {
         const val FILMS_LIST = "films"
-
+        const val FILM_LIKED = "film_liked"
+        const val COMMENTS = "comments"
+        const val REQUEST_CODE = 321
     }
 }

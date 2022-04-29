@@ -3,8 +3,12 @@ package com.nikita.filmapp.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.nikita.filmapp.DetailsActivity
@@ -15,7 +19,10 @@ import com.nikita.filmapp.models.Film
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class FilmsAdapter(private val dataSet: List<Film>) :
+class FilmsAdapter(
+    private val dataSet: List<Film>,
+    private val handleClick: (film: Film) -> Unit
+) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
 
@@ -29,10 +36,7 @@ class FilmsAdapter(private val dataSet: List<Film>) :
                 btnGoToFilmDetails.setOnClickListener {
                     film.selected = !film.selected
                     handleTextChange(film, tvFilmTitle)
-                    Intent(context, DetailsActivity::class.java).run {
-                        putExtra(DetailsActivity.DATA_KEY, Json.encodeToString(film))
-                        context.startActivity(this)
-                    }
+                    handleClick(film)
                 }
             }
         }
