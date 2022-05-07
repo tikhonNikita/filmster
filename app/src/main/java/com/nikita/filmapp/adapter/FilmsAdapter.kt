@@ -21,7 +21,7 @@ import kotlinx.serialization.json.Json
 
 class FilmsAdapter(
     private val dataSet: List<Film>,
-    private val handleClick: (film: Film) -> Unit
+    private val interactionHandler: InteractionHandler
 ) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
@@ -36,7 +36,16 @@ class FilmsAdapter(
                 btnGoToFilmDetails.setOnClickListener {
                     film.selected = !film.selected
                     handleTextChange(film, tvFilmTitle)
-                    handleClick(film)
+                    interactionHandler.handleClick(film)
+                }
+
+                ibLike.setOnClickListener {
+                    val inList = interactionHandler.addFilm(film)
+                    if (inList) {
+                        ibLike.setImageResource(R.drawable.ic_star_filled)
+                    } else {
+                        ibLike.setImageResource(R.drawable.ic_star_like)
+                    }
                 }
             }
         }
@@ -65,9 +74,13 @@ class FilmsAdapter(
     override fun getItemCount(): Int = dataSet.size
 }
 
+interface InteractionHandler {
+    fun handleClick (film: Film)
+    fun addFilm (film: Film): Boolean
+}
+
 // TODO:
 //  Add display of new activity with film data
 //  Add button to invite a new friend
-//  Add like button
 //  Add comments field
 // Add saving in cache?
