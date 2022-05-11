@@ -19,4 +19,5 @@
     <string name="did_you_enjoy_the_movie">Did you enjoy the movie?</string>
     <string name="please_leave_any_comments_if_yoy_have">Please leave any comments if yoy have</string>
     <string name="send_comments_back">Send Comments back</string>
+    <string name="favourite">Favourite</string>
 </resources>

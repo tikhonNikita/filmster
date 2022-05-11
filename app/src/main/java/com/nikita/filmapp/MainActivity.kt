@@ -3,6 +3,10 @@ package com.nikita.filmapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,9 +19,9 @@ import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
-    //TODO: add start fill
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var filmList: List<Film>
@@ -86,6 +90,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun addToFavourites(film: Film) {
         favouriteFilms.add(film)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.mi_favouriteFilms -> {
+                Log.d("SELECTED", favouriteFilms.map(Film::title).toString())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 

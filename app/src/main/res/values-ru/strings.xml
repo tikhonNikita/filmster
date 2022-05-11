@@ -19,4 +19,5 @@
     <string name="did_you_enjoy_the_movie">Вам понравился фильм?</string>
     <string name="please_leave_any_comments_if_yoy_have">Комментарии</string>
     <string name="send_comments_back">Сохранить комментарии</string>
+    <string name="favourite">Любимые</string>
 </resources>
