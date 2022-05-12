@@ -88,10 +88,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addToFavourites(film: Film) {
-        favouriteFilms.add(film)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
@@ -102,11 +98,19 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.mi_favouriteFilms -> {
-                Log.d("SELECTED", favouriteFilms.map(Film::title).toString())
+              if (favouriteFilms.isNotEmpty()) {
+                  goToFavouritesActivity()
+              }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun goToFavouritesActivity() {
+        val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
+        intent.putExtra(FAV_FILMS, Json.encodeToString(favouriteFilms))
+        startActivity(intent)
     }
 
 
@@ -116,6 +120,7 @@ class MainActivity : AppCompatActivity() {
         const val FILM_LIKED = "film_liked"
         const val COMMENTS = "comments"
         const val REQUEST_CODE = 321
+        const val FAV_FILMS = "FAV_FILMS"
     }
 
     private fun initFilms(encodedFilms: String?): List<Film> {
