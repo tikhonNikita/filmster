@@ -20,4 +20,6 @@
     <string name="please_leave_any_comments_if_yoy_have">Комментарии</string>
     <string name="send_comments_back">Сохранить комментарии</string>
     <string name="favourite">Любимые</string>
+    <string name="deleted_message">Фильм успешно удален</string>
+    <string name="snackbar_undo">Отмена</string>
 </resources>

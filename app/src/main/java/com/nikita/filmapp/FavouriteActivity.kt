@@ -1,23 +1,23 @@
 package com.nikita.filmapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.nikita.filmapp.MainActivity.Companion.FAV_FILMS
 import com.nikita.filmapp.adapter.FavouriteFilm.FavouriteFilmAdapter
+import com.nikita.filmapp.adapter.SwipeToDeleteCallback
 import com.nikita.filmapp.databinding.ActivityFavouriteBinding
-import com.nikita.filmapp.databinding.ActivityMainBinding
-import com.nikita.filmapp.databinding.FavouriteFilmBinding
 import com.nikita.filmapp.models.Film
-import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.math.log
+
 
 class FavouriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavouriteBinding
-    private lateinit var favouriteFilms: List<Film>
+    private lateinit var favouriteFilms: MutableList<Film>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,17 +30,40 @@ class FavouriteActivity : AppCompatActivity() {
     }
 
 
+
     private fun initRecyclerView() {
-        Log.d("PIZDA", favouriteFilms.toString())
-        binding.rvFavouriteFilms.adapter = FavouriteFilmAdapter(favouriteFilms)
+        val favAdapter = FavouriteFilmAdapter(favouriteFilms)
+        binding.rvFavouriteFilms.adapter = favAdapter
         binding.rvFavouriteFilms.layoutManager = LinearLayoutManager(this)
+
+        val swipeToDeleteCallback = object : SwipeToDeleteCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                var film = favouriteFilms[position]
+                favouriteFilms.removeAt(position)
+                favAdapter.notifyItemRemoved(position)
+
+                val message = resources.getString(R.string.deleted_message)
+                val undo = resources.getString(R.string.snackbar_undo)
+
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).apply {
+                    setAction(undo) {
+                        favouriteFilms.add(position, film)
+                        favAdapter.notifyItemInserted(position)
+                    }.show()
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(binding.rvFavouriteFilms)
     }
 
-    private fun initFilms(encodedFilms: String?): List<Film> {
+    private fun initFilms(encodedFilms: String?): MutableList<Film> {
         return if (encodedFilms != null) {
             Json.decodeFromString(encodedFilms)
         } else {
-            listOf()
+            mutableListOf()
         }
     }
 }
