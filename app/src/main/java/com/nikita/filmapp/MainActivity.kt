@@ -1,7 +1,6 @@
 package com.nikita.filmapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,7 +8,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.ActivityMainBinding
@@ -18,6 +19,7 @@ import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,6 +75,18 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         initRecyclerView(startAnotherActivity)
+    }
+
+    override fun onBackPressed() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.title))
+            .setMessage(resources.getString(R.string.supporting_text))
+            .setNegativeButton(resources.getString(R.string.decline)) {_,_ ->}
+            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                super.onBackPressed()
+            }
+            .show()
+
     }
 
 

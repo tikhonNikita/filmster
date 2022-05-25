@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.nikita.filmapp.MainActivity.Companion.FAV_FILMS
@@ -15,6 +14,8 @@ import com.nikita.filmapp.models.Film
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import androidx.recyclerview.widget.GridLayoutManager
+
 
 
 class FavouriteActivity : AppCompatActivity() {
@@ -34,7 +35,7 @@ class FavouriteActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         val favAdapter = FavouriteFilmAdapter(favouriteFilms)
         binding.rvFavouriteFilms.adapter = favAdapter
-        binding.rvFavouriteFilms.layoutManager = LinearLayoutManager(this)
+        binding.rvFavouriteFilms.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.grid_columns))
 
         val swipeToDeleteCallback = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

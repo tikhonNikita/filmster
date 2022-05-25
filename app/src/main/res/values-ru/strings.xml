@@ -22,4 +22,8 @@
     <string name="favourite">Любимые</string>
     <string name="deleted_message">Фильм успешно удален</string>
     <string name="snackbar_undo">Отмена</string>
+    <string name="cancel">Отмена</string>
+    <string name="supporting_text">Вы действительно хотете выйти?</string>
+    <string name="decline">Нет</string>
+    <string name="accept">Да</string>
 </resources>
