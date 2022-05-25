@@ -38,6 +38,12 @@ class FilmsAdapter(
                     handleTextChange(film, tvFilmTitle)
                     interactionHandler.handleClick(film)
                 }
+                if (interactionHandler.checkIfInList(film)) {
+                    ibLike.setImageResource(R.drawable.ic_star_filled)
+                } else {
+                    ibLike.setImageResource(R.drawable.ic_star_like)
+                }
+
 
                 ibLike.setOnClickListener {
                     val inList = interactionHandler.addFilm(film)
@@ -77,6 +83,7 @@ class FilmsAdapter(
 interface InteractionHandler {
     fun handleClick (film: Film)
     fun addFilm (film: Film): Boolean
+    fun checkIfInList (film: Film): Boolean
 }
 
 // TODO:

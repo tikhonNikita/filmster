@@ -1,5 +1,6 @@
 package com.nikita.filmapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -12,6 +13,7 @@ import com.nikita.filmapp.adapter.SwipeToDeleteCallback
 import com.nikita.filmapp.databinding.ActivityFavouriteBinding
 import com.nikita.filmapp.models.Film
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 
@@ -29,8 +31,6 @@ class FavouriteActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun initRecyclerView() {
         val favAdapter = FavouriteFilmAdapter(favouriteFilms)
         binding.rvFavouriteFilms.adapter = favAdapter
@@ -39,7 +39,7 @@ class FavouriteActivity : AppCompatActivity() {
         val swipeToDeleteCallback = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                var film = favouriteFilms[position]
+                val film = favouriteFilms[position]
                 favouriteFilms.removeAt(position)
                 favAdapter.notifyItemRemoved(position)
 
@@ -57,6 +57,14 @@ class FavouriteActivity : AppCompatActivity() {
 
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.rvFavouriteFilms)
+    }
+
+    override fun onBackPressed() {
+        val data = Intent()
+        data.putExtra(MainActivity.FAVOURITE_FILMS, Json.encodeToString(favouriteFilms))
+        setResult(RESULT_OK, data)
+
+        super.onBackPressed()
     }
 
     private fun initFilms(encodedFilms: String?): MutableList<Film> {

@@ -3,7 +3,6 @@ package com.nikita.filmapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -19,13 +18,13 @@ import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var filmList: List<Film>
     private lateinit var favouriteFilms: MutableList<Film>
+    private lateinit var startFavouriteActivity: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +51,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        startFavouriteActivity = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val data = result.data
+            if (result.resultCode == RESULT_OK && data != null) {
+                if (data.hasExtra(FAVOURITE_FILMS)) {
+                    val rawFilms = data.getStringExtra(FAVOURITE_FILMS)
+                    if (rawFilms != null) {
+                        val films: MutableList<Film> = Json.decodeFromString(rawFilms)
+                        val filmsThatChanged = favouriteFilms.subtract(films)
+                        val adapter = binding.rvFilmList.adapter
+                        favouriteFilms = films
+                        filmsThatChanged.forEach { adapter?.notifyItemChanged(filmList.indexOf(it)) }
+                    }
+                }
+            }
+        }
+
 
         val view = binding.root
         setContentView(view)
@@ -64,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         val data = Json.encodeToString(filmList)
         outState.putString(FILMS_LIST, data)
     }
+
 
     private fun initRecyclerView(activityStarter: ActivityResultLauncher<Intent>) {
         binding.rvFilmList.apply {
@@ -83,6 +101,10 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                 }
+
+                override fun checkIfInList(film: Film) = favouriteFilms.contains(film)
+
+
             })
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
@@ -98,9 +120,9 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.mi_favouriteFilms -> {
-              if (favouriteFilms.isNotEmpty()) {
-                  goToFavouritesActivity()
-              }
+                if (favouriteFilms.isNotEmpty()) {
+                    goToFavouritesActivity()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -110,13 +132,13 @@ class MainActivity : AppCompatActivity() {
     private fun goToFavouritesActivity() {
         val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
         intent.putExtra(FAV_FILMS, Json.encodeToString(favouriteFilms))
-        startActivity(intent)
+        startFavouriteActivity.launch(intent)
     }
 
 
     companion object {
         const val FILMS_LIST = "films"
-        const val FAVOURITE_FILMS = "films"
+        const val FAVOURITE_FILMS = "films" // from fav activity
         const val FILM_LIKED = "film_liked"
         const val COMMENTS = "comments"
         const val REQUEST_CODE = 321
