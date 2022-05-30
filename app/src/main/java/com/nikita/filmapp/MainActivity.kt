@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.ActivityMainBinding
+import com.nikita.filmapp.fragments.MainFragment
 import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
@@ -34,13 +35,13 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, TestFragment())
+            .replace(R.id.main_container, MainFragment())
             .commit()
 
 //
 //        filmList = initFilms(savedInstanceState?.getString(FILMS_LIST))
 //        favouriteFilms = mutableListOf()
-
+//
 //        val startAnotherActivity = registerForActivityResult(
 //            ActivityResultContracts.StartActivityForResult()
 //        ) { result ->
@@ -82,18 +83,18 @@ class MainActivity : AppCompatActivity() {
 //        setContentView(view)
 //        initRecyclerView(startAnotherActivity)
     }
-
-//    override fun onBackPressed() {
-//        MaterialAlertDialogBuilder(this)
-//            .setTitle(resources.getString(R.string.title))
-//            .setMessage(resources.getString(R.string.supporting_text))
-//            .setNegativeButton(resources.getString(R.string.decline)) {_,_ ->}
-//            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-//                super.onBackPressed()
-//            }
-//            .show()
 //
-//    }
+    override fun onBackPressed() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.title))
+            .setMessage(resources.getString(R.string.supporting_text))
+            .setNegativeButton(resources.getString(R.string.decline)) {_,_ ->}
+            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                super.onBackPressed()
+            }
+            .show()
+
+    }
 //
 //
 //    override fun onSaveInstanceState(outState: Bundle) {
@@ -130,24 +131,21 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 //
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater: MenuInflater = menuInflater
-//        inflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle item selection
-//        return when (item.itemId) {
-//            R.id.mi_favouriteFilms -> {
-//                if (favouriteFilms.isNotEmpty()) {
-//                    goToFavouritesActivity()
-//                }
-//                true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.mi_favouriteFilms -> {
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 //
 //    private fun goToFavouritesActivity() {
 //        val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
@@ -163,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         const val COMMENTS = "comments"
         const val REQUEST_CODE = 321
         const val FAV_FILMS = "FAV_FILMS"
+        const val DATA_KEY = "FILM_DATA_KEY"
     }
 //
 //    private fun initFilms(encodedFilms: String?): List<Film> {
