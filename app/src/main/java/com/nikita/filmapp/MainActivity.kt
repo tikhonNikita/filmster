@@ -20,6 +20,7 @@ import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
@@ -83,19 +84,25 @@ class MainActivity : AppCompatActivity() {
 //        setContentView(view)
 //        initRecyclerView(startAnotherActivity)
     }
-//
+
+    //
     override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+            return
+        }
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.title))
             .setMessage(resources.getString(R.string.supporting_text))
-            .setNegativeButton(resources.getString(R.string.decline)) {_,_ ->}
+            .setNegativeButton(resources.getString(R.string.decline)) { _, _ -> }
             .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
                 super.onBackPressed()
             }
             .show()
 
     }
-//
+
+    //
 //
 //    override fun onSaveInstanceState(outState: Bundle) {
 //        super.onSaveInstanceState(outState)
@@ -146,7 +153,8 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-//
+
+    //
 //    private fun goToFavouritesActivity() {
 //        val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
 //        intent.putExtra(FAV_FILMS, Json.encodeToString(favouriteFilms))
@@ -155,6 +163,7 @@ class MainActivity : AppCompatActivity() {
 //
 //
     companion object {
+        const val DETAILS_RESULT = "DETAILS_RESULT"
         const val FILMS_LIST = "films"
         const val FAVOURITE_FILMS = "films" // from fav activity
         const val FILM_LIKED = "film_liked"

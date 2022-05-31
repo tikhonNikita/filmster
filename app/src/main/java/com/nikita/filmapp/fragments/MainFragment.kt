@@ -6,15 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nikita.filmapp.DetailsActivity
 import com.nikita.filmapp.MainActivity
+import com.nikita.filmapp.MainActivity.Companion.DETAILS_RESULT
 import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.MainFragmentBinding
+import com.nikita.filmapp.fragments.DetailsFragment.Companion.COMM_KEY
+import com.nikita.filmapp.fragments.DetailsFragment.Companion.LIKED_KEY
 import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
@@ -43,6 +47,17 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         filmList = initFilms(savedInstanceState?.getString(MainActivity.FILMS_LIST))
         initRecyclerView()
+
+        parentFragmentManager.setFragmentResultListener(DETAILS_RESULT, this) { _, bundle ->
+            val liked = bundle.getBoolean(LIKED_KEY, false)
+            val text = bundle.getString(COMM_KEY, "")
+            Toast.makeText(
+                activity,
+                "Film is ${if (liked) "liked" else "disliked"} and: " + text,
+                Toast.LENGTH_LONG
+            )
+                .show()
+        }
     }
 
     private fun initFilms(encodedFilms: String?): List<Film> {
@@ -66,24 +81,7 @@ class MainFragment : Fragment() {
     private fun initRecyclerView() {
         binding.rvFilmList.apply {
             adapter = FilmsAdapter(filmList, object : InteractionHandler {
-                override fun handleClick(film: Film) {
-                    val stringedFilm = Json.encodeToString(film)
-                    val fragmentToGo = DetailsFragment()
-                    val args = Bundle().apply {
-                        putString(MainActivity.DATA_KEY, stringedFilm)
-                    }
-                    fragmentToGo.arguments = args
-                    activity?.apply {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_container, fragmentToGo)
-                            .remove(this@MainFragment)
-                            .addToBackStack("go_to_details")
-                            .commit()
-                    }
-//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-//                    intent.putExtra(DetailsActivity.DATA_KEY, Json.encodeToString(film))
-//                    activityStarter.launch(intent)
-                }
+                override fun handleClick(film: Film) = handleDetailsItemClick(film)
 
                 override fun addFilm(film: Film): Boolean = true
                 //{
@@ -104,6 +102,17 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
     }
+
+
+    private fun handleDetailsItemClick(film: Film) {
+        activity?.apply {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_container, DetailsFragment.create(film))
+                .addToBackStack("details")
+                .commit()
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
