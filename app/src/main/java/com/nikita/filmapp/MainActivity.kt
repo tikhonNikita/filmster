@@ -8,9 +8,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationView
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.ActivityMainBinding
@@ -26,6 +30,9 @@ import kotlin.math.log
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var toolbar: Toolbar
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
     private lateinit var filmList: List<Film>
     private lateinit var favouriteFilms: MutableList<Film>
     private lateinit var startFavouriteActivity: ActivityResultLauncher<Intent>
@@ -38,6 +45,25 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, MainFragment())
             .commit()
+        toolbar = binding.mainToolbar
+        setSupportActionBar(toolbar)
+        drawerLayout = binding.drawerLayout
+        navView = binding.navigationView
+
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.app_name,
+            R.string.batman
+        )
+
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+        navView.setNavigationItemSelectedListener {
+            false
+        }
 
 //
 //        filmList = initFilms(savedInstanceState?.getString(FILMS_LIST))
@@ -138,11 +164,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 //
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
