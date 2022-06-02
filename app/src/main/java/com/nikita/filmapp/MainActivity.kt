@@ -2,6 +2,7 @@ package com.nikita.filmapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -30,9 +31,6 @@ import kotlin.math.log
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var toolbar: Toolbar
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
     private lateinit var filmList: List<Film>
     private lateinit var favouriteFilms: MutableList<Film>
     private lateinit var startFavouriteActivity: ActivityResultLauncher<Intent>
@@ -42,73 +40,45 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, MainFragment())
-            .commit()
-        toolbar = binding.mainToolbar
-        setSupportActionBar(toolbar)
-        drawerLayout = binding.drawerLayout
-        navView = binding.navigationView
+        goToMainFragment()
+        initDrawer()
+    }
+
+    private fun initDrawer() {
+        setSupportActionBar(binding.mainToolbar)
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
-            drawerLayout,
-            toolbar,
+            binding.drawerLayout,
+            binding.mainToolbar,
             R.string.app_name,
             R.string.batman
         )
 
 
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        navView.setNavigationItemSelectedListener {
-            false
+        binding.navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.dmAll -> {
+                    goToMainFragment()
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.dmFavourites -> {
+                    true
+                }
+                else -> {
+                    true
+                }
+            }
         }
+    }
 
-//
-//        filmList = initFilms(savedInstanceState?.getString(FILMS_LIST))
-//        favouriteFilms = mutableListOf()
-//
-//        val startAnotherActivity = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result ->
-//            val data = result.data
-//            if (result.resultCode == RESULT_OK && data != null) {
-//                val liked = data.getBooleanExtra(FILM_LIKED, false)
-//                if (data.hasExtra(COMMENTS)) {
-//                    val comments = data.getStringExtra(COMMENTS)
-//                    Toast.makeText(
-//                        this,
-//                        "Film ${if (liked) "is" else "not"} " + comments,
-//                        Toast.LENGTH_LONG
-//                    )
-//                        .show()
-//                }
-//            }
-//        }
-//
-//        startFavouriteActivity = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result ->
-//            val data = result.data
-//            if (result.resultCode == RESULT_OK && data != null) {
-//                if (data.hasExtra(FAVOURITE_FILMS)) {
-//                    val rawFilms = data.getStringExtra(FAVOURITE_FILMS)
-//                    if (rawFilms != null) {
-//                        val films: MutableList<Film> = Json.decodeFromString(rawFilms)
-//                        val filmsThatChanged = favouriteFilms.subtract(films)
-//                        val adapter = binding.rvFilmList.adapter
-//                        favouriteFilms = films
-//                        filmsThatChanged.forEach { adapter?.notifyItemChanged(filmList.indexOf(it)) }
-//                    }
-//                }
-//            }
-//        }
-//
-//
-//        val view = binding.root
-//        setContentView(view)
-//        initRecyclerView(startAnotherActivity)
+    private fun goToMainFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, MainFragment())
+            .commit()
     }
 
     //
@@ -164,17 +134,6 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 //
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.mi_favouriteFilms -> {
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     //
 //    private fun goToFavouritesActivity() {
 //        val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
@@ -212,3 +171,49 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 }
+
+
+//
+//        filmList = initFilms(savedInstanceState?.getString(FILMS_LIST))
+//        favouriteFilms = mutableListOf()
+//
+//        val startAnotherActivity = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) { result ->
+//            val data = result.data
+//            if (result.resultCode == RESULT_OK && data != null) {
+//                val liked = data.getBooleanExtra(FILM_LIKED, false)
+//                if (data.hasExtra(COMMENTS)) {
+//                    val comments = data.getStringExtra(COMMENTS)
+//                    Toast.makeText(
+//                        this,
+//                        "Film ${if (liked) "is" else "not"} " + comments,
+//                        Toast.LENGTH_LONG
+//                    )
+//                        .show()
+//                }
+//            }
+//        }
+//
+//        startFavouriteActivity = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) { result ->
+//            val data = result.data
+//            if (result.resultCode == RESULT_OK && data != null) {
+//                if (data.hasExtra(FAVOURITE_FILMS)) {
+//                    val rawFilms = data.getStringExtra(FAVOURITE_FILMS)
+//                    if (rawFilms != null) {
+//                        val films: MutableList<Film> = Json.decodeFromString(rawFilms)
+//                        val filmsThatChanged = favouriteFilms.subtract(films)
+//                        val adapter = binding.rvFilmList.adapter
+//                        favouriteFilms = films
+//                        filmsThatChanged.forEach { adapter?.notifyItemChanged(filmList.indexOf(it)) }
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//        val view = binding.root
+//        setContentView(view)
+//        initRecyclerView(startAnotherActivity)

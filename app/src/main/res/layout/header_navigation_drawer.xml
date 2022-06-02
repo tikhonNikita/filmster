@@ -9,7 +9,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="FILMSTER APP"
+        android:text="@string/app_name"
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="THIS IS MY APP"
+        android:text="@string/the_best_movie_app"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="@color/material_on_surface_emphasis_medium" />
 

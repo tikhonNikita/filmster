@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/group1"
-        android:checkableBehavior="single">
+        android:id="@+id/drawerMenu"
+        android:checkableBehavior="all">
         <item
-            android:id="@+id/item1"
+            android:id="@+id/dmAll"
+            android:icon="@drawable/all_films"
             android:checked="true"
-            android:icon="@drawable/ic_star_filled"
-            android:title="TEST ONE" />
+            android:title="@string/all_films" />
         <item
-            android:id="@+id/item2"
-            android:icon="@drawable/ic_star_like"
-            android:title="TEST TVO" />
+            android:id="@+id/dmFavourites"
+            android:icon="@drawable/favorite_icon"
+            android:title="@string/favourites" />
     </group>
 </menu>

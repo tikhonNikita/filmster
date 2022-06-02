@@ -26,4 +26,7 @@
     <string name="supporting_text">Do you want to leave</string>
     <string name="decline">Nope</string>
     <string name="accept">Yes</string>
+    <string name="favourites">Favourites</string>
+    <string name="all_films">All films</string>
+    <string name="the_best_movie_app">The best movie app</string>
 </resources>
