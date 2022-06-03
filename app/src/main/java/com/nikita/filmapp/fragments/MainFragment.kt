@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.nikita.filmapp.MainActivity.Companion.DETAILS_RESULT
 import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
@@ -23,7 +24,7 @@ class MainFragment : Fragment() {
     private var _filmModel: FilmsHandler? = null
     private val filmModel get() = _filmModel!!
 
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
 
     override fun onCreateView(
@@ -36,7 +37,7 @@ class MainFragment : Fragment() {
         if (_filmModel == null) {
             throw Error("No Film Model is provided")
         }
-        return binding.root
+        return binding!!.root
     }
 
 
@@ -57,10 +58,26 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        binding.rvFilmList.apply {
+        binding?.rvFilmList?.apply {
             adapter = FilmsAdapter(filmModel.films, object : InteractionHandler {
                 override fun handleClick(film: Film) = handleDetailsItemClick(film)
-                override fun addFilm(film: Film) = filmModel.addToFavourites(film)
+                override fun addFilm(film: Film): Boolean {
+                    val message = "The Films was added to favorites"
+                    val undo = resources.getString(R.string.snackbar_undo)
+                    filmModel.addToFavourites(film)
+                    binding?.apply {
+                        Snackbar.make(root, message, Snackbar.LENGTH_SHORT).apply {
+                            setAction(undo) {
+                                val index = filmModel.films.indexOf(film)
+                                filmModel.removeFromFavourites(film)
+                                rvFilmList.adapter?.notifyItemChanged(index)
+                            }.show()
+                        }
+                    }
+
+                    return true
+                }
+
                 override fun checkIfInList(film: Film) = filmModel.checkIfInFavourites(film)
                 override fun removeFromFavourites(film: Film) = filmModel.removeFromFavourites(film)
 
