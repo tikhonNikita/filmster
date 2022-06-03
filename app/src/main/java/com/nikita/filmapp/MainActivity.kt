@@ -13,12 +13,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentOnAttachListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.ActivityMainBinding
+import com.nikita.filmapp.fragments.FavouritesFragment
+import com.nikita.filmapp.fragments.FavouritesFragment.Companion.FAV_FRAGMENT_DATA
+import com.nikita.filmapp.fragments.FavouritesFragment.Companion.FAV_FRAGMENT_RESULT
+import com.nikita.filmapp.fragments.FilmsHandler
 import com.nikita.filmapp.fragments.MainFragment
 import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.filmLists
@@ -28,17 +35,18 @@ import kotlinx.serialization.json.Json
 import kotlin.math.log
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilmsHandler {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var filmList: List<Film>
-    private lateinit var favouriteFilms: MutableList<Film>
-    private lateinit var startFavouriteActivity: ActivityResultLauncher<Intent>
+    override lateinit var films: MutableList<Film>
+    override lateinit var favouriteFilms: MutableList<Film>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        films = initFilms(savedInstanceState?.getString(FILMS_LIST))
+        favouriteFilms = initFavFilms(savedInstanceState?.getString(FAV_FILM_LIST))
         setContentView(view)
         goToMainFragment()
         initDrawer()
@@ -66,11 +74,20 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.dmFavourites -> {
+                    goToFavouritesFragment()
+                    binding.drawerLayout.closeDrawers()
                     true
                 }
                 else -> {
                     true
                 }
+            }
+        }
+        supportFragmentManager.addOnBackStackChangedListener {
+            val fragments = supportFragmentManager.fragments
+            if (fragments[0] is MainFragment) {
+                binding.navigationView.menu.getItem(0).isChecked = true
+
             }
         }
     }
@@ -79,6 +96,21 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, MainFragment())
             .commit()
+    }
+
+
+    private fun goToFavouritesFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, FavouritesFragment.create(favouriteFilms))
+            .addToBackStack(null)
+            .commit()
+        supportFragmentManager.setFragmentResultListener(FAV_FRAGMENT_RESULT, this) { _, bundle ->
+            val updatedFavourites = bundle.getString(FAV_FRAGMENT_DATA)
+            updatedFavourites?.also {
+                val newFavFilms: MutableList<Film> = Json.decodeFromString(it)
+                favouriteFilms = newFavFilms
+            }
+        }
     }
 
     //
@@ -98,14 +130,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun addToFavourites(film: Film) = favouriteFilms.add(film)
+
+    override fun removeFromFavourites(film: Film) = favouriteFilms.remove(film)
+
+    override fun checkIfInFavourites(film: Film) = favouriteFilms.contains(film)
+
     //
 //
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        val data = Json.encodeToString(filmList)
-//        outState.putString(FILMS_LIST, data)
-//    }
-//
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val data = Json.encodeToString(films)
+        val favData = Json.encodeToString(favouriteFilms)
+        outState.putString(FILMS_LIST, data)
+        outState.putString(FAV_FILM_LIST, favData)
+    }
+
+    //
 //
 //    private fun initRecyclerView(activityStarter: ActivityResultLauncher<Intent>) {
 //        binding.rvFilmList.apply {
@@ -145,31 +186,37 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val DETAILS_RESULT = "DETAILS_RESULT"
         const val FILMS_LIST = "films"
-        const val FAVOURITE_FILMS = "films" // from fav activity
-        const val FILM_LIKED = "film_liked"
-        const val COMMENTS = "comments"
-        const val REQUEST_CODE = 321
+        const val FAV_FILM_LIST = "films_fav"
         const val FAV_FILMS = "FAV_FILMS"
         const val DATA_KEY = "FILM_DATA_KEY"
     }
-//
-//    private fun initFilms(encodedFilms: String?): List<Film> {
-//        return if (encodedFilms != null) {
-//            Json.decodeFromString(encodedFilms)
-//        } else {
-//            listOf(
-//                Film(1, "Batman", R.drawable.batman, "Film about batman", false),
-//                Film(2, "Iron man 3", R.drawable.iron_man, filmLists[1].description, false),
-//                Film(
-//                    3,
-//                    "Doctor Strange in the Multiverse of Madness",
-//                    R.drawable.multiverse_of_madness,
-//                    "Doctor Strange in the Multiverse of Madness film ",
-//                    false
-//                ),
-//            )
-//        }
-//    }
+
+    //
+    private fun initFilms(encodedFilms: String?): MutableList<Film> {
+        return if (encodedFilms != null) {
+            Json.decodeFromString(encodedFilms)
+        } else {
+            mutableListOf(
+                Film(1, "Batman", R.drawable.batman, "Film about batman", false),
+                Film(2, "Iron man 3", R.drawable.iron_man, filmLists[1].description, false),
+                Film(
+                    3,
+                    "Doctor Strange in the Multiverse of Madness",
+                    R.drawable.multiverse_of_madness,
+                    "Doctor Strange in the Multiverse of Madness film ",
+                    false
+                ),
+            )
+        }
+    }
+
+    private fun initFavFilms(encodedFilms: String?): MutableList<Film> {
+        return if (encodedFilms != null) {
+            Json.decodeFromString(encodedFilms)
+        } else {
+            mutableListOf()
+        }
+    }
 }
 
 

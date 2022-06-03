@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.nikita.filmapp.DetailsActivity
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
@@ -32,10 +31,9 @@ class FilmsAdapter(
             itemBinding.apply {
                 tvFilmTitle.text = film.title
                 ivFilmCard.setImageResource(film.image)
-                handleTextChange(film, tvFilmTitle)
+                itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
                     film.selected = !film.selected
-                    handleTextChange(film, tvFilmTitle)
                     interactionHandler.handleClick(film)
                 }
                 if (interactionHandler.checkIfInList(film)) {
@@ -46,22 +44,15 @@ class FilmsAdapter(
 
 
                 ibLike.setOnClickListener {
-                    val inList = interactionHandler.addFilm(film)
+                    val inList = interactionHandler.checkIfInList(film)
                     if (inList) {
-                        ibLike.setImageResource(R.drawable.ic_star_filled)
-                    } else {
                         ibLike.setImageResource(R.drawable.ic_star_like)
+                        interactionHandler.removeFromFavourites(film)
+                    } else {
+                        ibLike.setImageResource(R.drawable.ic_star_filled)
+                        interactionHandler.addFilm(film)
                     }
                 }
-            }
-        }
-
-        private fun handleTextChange(film: Film, textView: TextView) {
-            if (film.selected) {
-                textView.setTextColor(ContextCompat.getColor(context, R.color.teal_700))
-            } else {
-                textView.setTextColor(ContextCompat.getColor(context, R.color.black))
-
             }
         }
     }
@@ -81,9 +72,10 @@ class FilmsAdapter(
 }
 
 interface InteractionHandler {
-    fun handleClick (film: Film)
-    fun addFilm (film: Film): Boolean
-    fun checkIfInList (film: Film): Boolean
+    fun handleClick(film: Film)
+    fun addFilm(film: Film): Boolean
+    fun checkIfInList(film: Film): Boolean
+    fun removeFromFavourites(film: Film): Boolean
 }
 
 // TODO:
