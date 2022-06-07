@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
             Toast.makeText(
                 activity,
                 "Film is ${if (liked) "liked" else "disliked"} and: " + text,
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             )
                 .show()
         }
