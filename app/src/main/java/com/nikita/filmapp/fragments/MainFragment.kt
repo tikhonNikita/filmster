@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.MainActivity.Companion.DETAILS_RESULT
 import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
@@ -87,11 +91,15 @@ class MainFragment : Fragment() {
         }
     }
 
-
     private fun handleDetailsItemClick(film: Film) {
+        val act = activity as? MainActivity
+        act?.supportActionBar?.hide()
+        val layout = requireActivity().findViewById<FrameLayout>(R.id.main_container)
+        val padd = layout.paddingTop
+        layout.setPadding(0,0,0,0)
         activity?.apply {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_container, DetailsFragment.create(film))
+                .replace(R.id.main_container, DetailsFragment.create(film, padd))
                 .addToBackStack("details")
                 .commit()
         }

@@ -1,26 +1,9 @@
 package com.nikita.filmapp
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentOnAttachListener
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.navigation.NavigationView
-import com.nikita.filmapp.adapter.FilmsAdapter
-import com.nikita.filmapp.adapter.InteractionHandler
 import com.nikita.filmapp.databinding.ActivityMainBinding
 import com.nikita.filmapp.fragments.FavouritesFragment
 import com.nikita.filmapp.fragments.FavouritesFragment.Companion.FAV_FRAGMENT_DATA
@@ -32,7 +15,6 @@ import com.nikita.filmapp.models.filmLists
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity(), FilmsHandler {
@@ -146,43 +128,6 @@ class MainActivity : AppCompatActivity(), FilmsHandler {
         outState.putString(FAV_FILM_LIST, favData)
     }
 
-    //
-//
-//    private fun initRecyclerView(activityStarter: ActivityResultLauncher<Intent>) {
-//        binding.rvFilmList.apply {
-//            adapter = FilmsAdapter(filmList, object : InteractionHandler {
-//                override fun handleClick(film: Film) {
-//                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-//                    intent.putExtra(DetailsActivity.DATA_KEY, Json.encodeToString(film))
-//                    activityStarter.launch(intent)
-//                }
-//
-//                override fun addFilm(film: Film): Boolean {
-//                    return if (favouriteFilms.contains(film)) {
-//                        favouriteFilms.remove(film)
-//                        false
-//                    } else {
-//                        favouriteFilms.add(film)
-//                        true
-//                    }
-//                }
-//
-//                override fun checkIfInList(film: Film) = favouriteFilms.contains(film)
-//
-//
-//            })
-//            layoutManager = LinearLayoutManager(this@MainActivity)
-//        }
-//    }
-//
-    //
-//    private fun goToFavouritesActivity() {
-//        val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
-//        intent.putExtra(FAV_FILMS, Json.encodeToString(favouriteFilms))
-//        startFavouriteActivity.launch(intent)
-//    }
-//
-//
     companion object {
         const val DETAILS_RESULT = "DETAILS_RESULT"
         const val FILMS_LIST = "films"
@@ -218,49 +163,3 @@ class MainActivity : AppCompatActivity(), FilmsHandler {
         }
     }
 }
-
-
-//
-//        filmList = initFilms(savedInstanceState?.getString(FILMS_LIST))
-//        favouriteFilms = mutableListOf()
-//
-//        val startAnotherActivity = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result ->
-//            val data = result.data
-//            if (result.resultCode == RESULT_OK && data != null) {
-//                val liked = data.getBooleanExtra(FILM_LIKED, false)
-//                if (data.hasExtra(COMMENTS)) {
-//                    val comments = data.getStringExtra(COMMENTS)
-//                    Toast.makeText(
-//                        this,
-//                        "Film ${if (liked) "is" else "not"} " + comments,
-//                        Toast.LENGTH_LONG
-//                    )
-//                        .show()
-//                }
-//            }
-//        }
-//
-//        startFavouriteActivity = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result ->
-//            val data = result.data
-//            if (result.resultCode == RESULT_OK && data != null) {
-//                if (data.hasExtra(FAVOURITE_FILMS)) {
-//                    val rawFilms = data.getStringExtra(FAVOURITE_FILMS)
-//                    if (rawFilms != null) {
-//                        val films: MutableList<Film> = Json.decodeFromString(rawFilms)
-//                        val filmsThatChanged = favouriteFilms.subtract(films)
-//                        val adapter = binding.rvFilmList.adapter
-//                        favouriteFilms = films
-//                        filmsThatChanged.forEach { adapter?.notifyItemChanged(filmList.indexOf(it)) }
-//                    }
-//                }
-//            }
-//        }
-//
-//
-//        val view = binding.root
-//        setContentView(view)
-//        initRecyclerView(startAnotherActivity)
