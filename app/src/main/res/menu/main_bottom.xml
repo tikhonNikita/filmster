@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:id="@+id/drawerMenu"
-        android:checkableBehavior="all">
         <item
             android:id="@+id/dmAll"
             android:icon="@drawable/all_films"
@@ -12,5 +9,4 @@
             android:id="@+id/dmFavourites"
             android:icon="@drawable/favorite_icon"
             android:title="@string/favourites" />
-    </group>
 </menu>

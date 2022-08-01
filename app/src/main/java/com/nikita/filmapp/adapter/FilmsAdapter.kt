@@ -1,22 +1,13 @@
 package com.nikita.filmapp.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
 import com.nikita.filmapp.models.Film
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class FilmsAdapter(
     private val dataSet: List<Film>,
