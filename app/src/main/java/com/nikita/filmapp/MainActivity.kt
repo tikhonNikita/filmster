@@ -3,7 +3,7 @@ package com.nikita.filmapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.nikita.filmapp.fragments.MainFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,8 +14,14 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val navigate: BottomNavigationView = findViewById(R.id.navigate)
+       goToMainFragment()
+//        val navigate: BottomNavigationView = findViewById(R.id.navigate)
+    }
+
+        private fun goToMainFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_content, MainFragment())
+            .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {

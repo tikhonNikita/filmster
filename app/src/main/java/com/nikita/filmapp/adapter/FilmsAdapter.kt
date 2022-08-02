@@ -1,6 +1,7 @@
 package com.nikita.filmapp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,9 +10,10 @@ import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
 import com.nikita.filmapp.models.Film
 
+
+private const val TAG = "FILMDS_ADAPTER"
 class FilmsAdapter(
     private val dataSet: List<Film>,
-    private val interactionHandler: InteractionHandler
 ) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
@@ -24,25 +26,12 @@ class FilmsAdapter(
                 ivFilmCard.setImageResource(film.image)
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
-                    film.selected = !film.selected
-                    interactionHandler.handleClick(film)
+                    Log.d("TAG", "bind: bo to film details")
                 }
-                if (interactionHandler.checkIfInList(film)) {
-                    ibLike.setImageResource(R.drawable.ic_star_filled)
-                } else {
                     ibLike.setImageResource(R.drawable.ic_star_like)
-                }
-
 
                 ibLike.setOnClickListener {
-                    val inList = interactionHandler.checkIfInList(film)
-                    if (inList) {
-                        ibLike.setImageResource(R.drawable.ic_star_like)
-                        interactionHandler.removeFromFavourites(film)
-                    } else {
-                        ibLike.setImageResource(R.drawable.ic_star_filled)
-                        interactionHandler.addFilm(film)
-                    }
+                    Log.d(TAG, "bind: LIKE")
                 }
             }
         }
@@ -61,16 +50,3 @@ class FilmsAdapter(
 
     override fun getItemCount(): Int = dataSet.size
 }
-
-interface InteractionHandler {
-    fun handleClick(film: Film)
-    fun addFilm(film: Film): Boolean
-    fun checkIfInList(film: Film): Boolean
-    fun removeFromFavourites(film: Film): Boolean
-}
-
-// TODO:
-//  Add display of new activity with film data
-//  Add button to invite a new friend
-//  Add comments field
-// Add saving in cache?
