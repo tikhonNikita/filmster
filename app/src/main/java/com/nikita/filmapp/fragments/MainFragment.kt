@@ -5,8 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nikita.filmapp.MainActivity
+import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.databinding.MainFragmentBinding
 import com.nikita.filmapp.models.filmLists
@@ -34,6 +38,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
     }
 
     private fun initRecyclerView() {

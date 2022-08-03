@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
 import com.nikita.filmapp.models.Film
 
 
 private const val TAG = "FILMDS_ADAPTER"
+
 class FilmsAdapter(
     private val dataSet: List<Film>,
 ) :
@@ -28,7 +30,7 @@ class FilmsAdapter(
                 btnGoToFilmDetails.setOnClickListener {
                     Log.d("TAG", "bind: bo to film details")
                 }
-                    ibLike.setImageResource(R.drawable.ic_star_like)
+                ibLike.setImageResource(R.drawable.ic_star_like)
 
                 ibLike.setOnClickListener {
                     Log.d(TAG, "bind: LIKE")
