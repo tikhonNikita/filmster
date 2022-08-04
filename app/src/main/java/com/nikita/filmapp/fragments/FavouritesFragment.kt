@@ -12,12 +12,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FavouriteFilm.FavouriteFilmAdapter
 import com.nikita.filmapp.adapter.SwipeToDeleteCallback
-
 import com.nikita.filmapp.databinding.FavouritesFragmentBinding
 import com.nikita.filmapp.models.Film
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.nikita.filmapp.models.filmLists
 
 class FavouritesFragment : Fragment() {
     private var _binding: FavouritesFragmentBinding? = null
@@ -37,8 +34,7 @@ class FavouritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val filmsString = arguments?.getString(FAV_FILMS_KEY) ?: error("DATA IS MANDATORY")
-        favouriteFilms = Json.decodeFromString(filmsString)
+        favouriteFilms = filmLists.toCollection(mutableListOf())
         initRecyclerView()
     }
 
@@ -70,32 +66,6 @@ class FavouritesFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.rvFavouriteFilms)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val bundle = Bundle()
-        bundle.apply {
-            putString(FAV_FRAGMENT_DATA, Json.encodeToString(favouriteFilms))
-        }
-        parentFragmentManager.setFragmentResult(FAV_FRAGMENT_RESULT, bundle)
-    }
-
-
-    companion object {
-        fun create(films: List<Film>): FavouritesFragment {
-            val stringedFilms = Json.encodeToString(films)
-            val fragmentToGo = FavouritesFragment()
-            val args = Bundle().apply {
-                putString(FAV_FILMS_KEY, stringedFilms)
-            }
-            fragmentToGo.arguments = args
-            return fragmentToGo
-        }
-
-        private const val FAV_FILMS_KEY = "FAV_FILMS_KEY"
-        const val FAV_FRAGMENT_RESULT = "FAV_FRAGMENT_RESULT"
-        const val FAV_FRAGMENT_DATA = "FAV_FRAGMENT_DATA"
     }
 
 }

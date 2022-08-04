@@ -44,7 +44,7 @@ class MainFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding?.rvFilmList?.apply {
-            adapter = FilmsAdapter(filmLists)
+            adapter = FilmsAdapter(filmLists, activity as MainActivity)
             layoutManager = LinearLayoutManager(activity)
         }
     }

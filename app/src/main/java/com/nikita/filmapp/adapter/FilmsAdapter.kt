@@ -16,6 +16,7 @@ private const val TAG = "FILMDS_ADAPTER"
 
 class FilmsAdapter(
     private val dataSet: List<Film>,
+    private val mainActivity: MainActivity
 ) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
@@ -29,6 +30,7 @@ class FilmsAdapter(
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
                     Log.d("TAG", "bind: bo to film details")
+                    mainActivity.goToDetailsFragment()
                 }
                 ibLike.setImageResource(R.drawable.ic_star_like)
 
