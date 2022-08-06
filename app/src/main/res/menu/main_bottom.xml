@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item
-            android:id="@+id/dmAll"
+            android:id="@+id/mainFragment"
             android:icon="@drawable/all_films"
-            android:checked="true"
             android:title="@string/all_films" />
         <item
-            android:id="@+id/dmFavourites"
+            android:id="@+id/favouritesFragment"
             android:icon="@drawable/favorite_icon"
             android:title="@string/favourites" />
 </menu>

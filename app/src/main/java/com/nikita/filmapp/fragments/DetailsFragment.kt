@@ -52,4 +52,8 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    companion object {
+        public const val TAG = "DetailsFragment"
+    }
+
 }

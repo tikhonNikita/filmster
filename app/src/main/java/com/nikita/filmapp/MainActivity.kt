@@ -2,10 +2,9 @@ package com.nikita.filmapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.nikita.filmapp.fragments.DetailsFragment
-import com.nikita.filmapp.fragments.FavouritesFragment
-import com.nikita.filmapp.fragments.MainFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,50 +13,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        goToMainFragment()
+        //TODO: handle nav fragment
 
-        val navigate: BottomNavigationView = findViewById(R.id.navigate)
-        navigate.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.dmAll -> {
-                    goToMainFragment()
-                    true
-                }
-                R.id.dmFavourites -> {
-                    goToFavourites()
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
-        }
-
+        val navigationView: BottomNavigationView = findViewById(R.id.navigate)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        navigationView.setupWithNavController(navController)
 
     }
 
-    private fun goToMainFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_main_container, MainFragment())
-            .commit()
+    public fun goToDetailsFragment() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.action_mainFragment_to_detailsFragment)
     }
 
-    private fun goToFavourites() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_main_container, FavouritesFragment())
-            .commit()
-    }
-
-    fun goToDetailsFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.activity_main_container, DetailsFragment())
-            .addToBackStack("DetailsFragment")
-            .commit()
-    }
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 }
+

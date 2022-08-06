@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
@@ -17,6 +21,7 @@ import com.nikita.filmapp.models.filmLists
 
 
 private const val TAG = "MAIN_FRAGMENT"
+
 class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
@@ -53,5 +58,9 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        public const val TAG = "MainFragment"
     }
 }

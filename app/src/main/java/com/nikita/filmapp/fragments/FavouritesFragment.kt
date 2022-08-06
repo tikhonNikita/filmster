@@ -68,4 +68,8 @@ class FavouritesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.rvFavouriteFilms)
     }
 
+    companion object {
+        public const val TAG = "FavouritesFragment"
+    }
+
 }
