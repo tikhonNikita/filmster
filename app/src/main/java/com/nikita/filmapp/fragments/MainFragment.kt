@@ -36,6 +36,7 @@ class MainFragment : Fragment() {
     ): View {
         Log.d(TAG, "onCreateView: ")
         _binding = MainFragmentBinding.inflate(inflater, container, false)
+        (requireActivity() as MainActivity).supportActionBar!!.show()
         return binding!!.root
     }
 
@@ -43,8 +44,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
     }
 
     private fun initRecyclerView() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.databinding.DetailsFragmentBinding
 import com.nikita.filmapp.models.filmLists
 
@@ -25,6 +26,7 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DetailsFragmentBinding.inflate(inflater, container, false)
+        (requireActivity() as MainActivity).supportActionBar!!.show()
         return binding.root
 
     }
@@ -32,6 +34,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).supportActionBar!!.hide()
+
         val film = filmLists[0]
         binding.apply {
             ivDetails.setImageResource(film.image)
@@ -50,6 +54,10 @@ class DetailsFragment : Fragment() {
                 Log.d(TAG, "onViewCreated: ")
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     companion object {
