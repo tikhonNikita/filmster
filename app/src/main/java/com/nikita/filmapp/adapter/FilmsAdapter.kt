@@ -16,7 +16,8 @@ private const val TAG = "FILMDS_ADAPTER"
 
 class FilmsAdapter(
     private val dataSet: List<Film>,
-    private val mainActivity: MainActivity
+    private val mainActivity: MainActivity,
+    private val handlePress: () -> Unit
 ) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
@@ -35,7 +36,7 @@ class FilmsAdapter(
                 ibLike.setImageResource(R.drawable.ic_star_like)
 
                 ibLike.setOnClickListener {
-                    Log.d(TAG, "bind: LIKE")
+                    handlePress()
                 }
             }
         }
