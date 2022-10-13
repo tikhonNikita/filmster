@@ -15,6 +15,8 @@ class FilmViewModel : ViewModel() {
     val filmL: LiveData<MutableList<Film>>
         get() = films
 
+    val favFilms = MutableLiveData<MutableList<Film>>()
+
     fun updateFilms() {
 //        val tempList = mutableListOf<Film>()
 //        films.value?.let { tempList.addAll(it) }
