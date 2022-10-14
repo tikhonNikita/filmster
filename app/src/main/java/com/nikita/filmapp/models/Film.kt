@@ -1,6 +1,7 @@
 package com.nikita.filmapp.models
 
 import com.google.gson.Gson
+import com.nikita.filmapp.BuildConfig
 import com.nikita.filmapp.R
 import kotlinx.serialization.Serializable
 
@@ -59,7 +60,7 @@ val filmLists = listOf(
     ),
     Film(
         3,
-        "Doctor Strange in the Multiverse of Madness",
+        BuildConfig.MOVIE_API_KEY,
         R.drawable.multiverse_of_madness,
         "Doctor Strange in the Multiverse of Madness film",
         false
