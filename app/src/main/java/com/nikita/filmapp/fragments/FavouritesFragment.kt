@@ -1,10 +1,12 @@
 package com.nikita.filmapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,8 @@ import com.nikita.filmapp.adapter.SwipeToDeleteCallback
 import com.nikita.filmapp.databinding.FavouritesFragmentBinding
 import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.filmLists
+import com.nikita.filmapp.services.api.RetrofitInstance
+import kotlinx.coroutines.launch
 
 class FavouritesFragment : Fragment() {
     private var _binding: FavouritesFragmentBinding? = null
@@ -29,6 +33,9 @@ class FavouritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FavouritesFragmentBinding.inflate(inflater, container, false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val data = RetrofitInstance.api.getTrending()
+        }
         return binding.root
     }
 

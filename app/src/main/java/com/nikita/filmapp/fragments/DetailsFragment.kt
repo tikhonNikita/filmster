@@ -51,7 +51,7 @@ class DetailsFragment : Fragment() {
                 startActivity(sendIntent)
             }
             binding.bntSendComments.setOnClickListener {
-                Log.d(TAG, "onViewCreated: ")
+
             }
         }
     }

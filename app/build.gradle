@@ -14,6 +14,7 @@ android {
 
     defaultConfig {
         buildConfigField("String", "MOVIE_API_KEY", apikeyProperties['MOVIE_API_KEY'])
+        buildConfigField("String", "MOVIE_BASE_URL", apikeyProperties['MOVIE_BASE_URL'])
 
         applicationId "com.nikita.filmapp"
         minSdk 27

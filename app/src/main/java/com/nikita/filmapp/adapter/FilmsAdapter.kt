@@ -30,7 +30,7 @@ class FilmsAdapter(
                 ivFilmCard.setImageResource(film.image)
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
-                    Log.d("TAG", "bind: bo to film details")
+//                    Log.d("TAG", "bind: bo to film details")
                     mainActivity.goToDetailsFragment()
                 }
                 ibLike.setImageResource(R.drawable.ic_star_like)

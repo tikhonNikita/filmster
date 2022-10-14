@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         (requireActivity() as MainActivity).supportActionBar!!.show()
         viewModel.filmL.observe(viewLifecycleOwner) {
-            Log.d(TAG, viewModel.filmL.value.toString())
+//            Log.d(TAG, viewModel.filmL.value.toString())
             updateRecyclerView()
         }
         return binding!!.root
