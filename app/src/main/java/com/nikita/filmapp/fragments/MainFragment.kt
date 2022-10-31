@@ -1,24 +1,20 @@
 package com.nikita.filmapp.fragments
 
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieDrawable
 import com.nikita.filmapp.MainActivity
+import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.databinding.MainFragmentBinding
 import com.nikita.filmapp.models.Film
-import com.nikita.filmapp.models.filmLists
-import com.nikita.filmapp.services.api.RetrofitInstance
 import com.nikita.filmapp.viewModels.FilmViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlin.math.log
 
 
 private const val TAG = "MAIN_SOBAKA_FRAGMENT"
@@ -27,7 +23,7 @@ class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
 
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     private val viewModel: FilmViewModel by activityViewModels()
 
@@ -43,15 +39,24 @@ class MainFragment : Fragment() {
 //            Log.d(TAG, viewModel.filmL.value.toString())
             updateRecyclerView()
         }
+//
+        binding.laLoader.setAnimation(R.raw.films_loading)
+        binding.laLoader.repeatCount = LottieDrawable.INFINITE
+        binding.laLoader.playAnimation()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val request = async { RetrofitInstance.api.getTrending() }
-            val data = request.await()
-            data.body()?.let {
-                viewModel.addFirstFilm(title = it.results[0].title)
-            }
-        }
-        return binding!!.root
+
+        //TODO: make newtwork request here
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            binding.laLoader.visibility = View.INVISIBLE
+
+            binding.rvFilmList.visibility = View.VISIBLE
+
+        }, 2000)
+
+        viewModel.getFilm()
+
+        return binding.root
     }
 
 
@@ -66,7 +71,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecyclerView(list: List<Film>) {
-        binding?.rvFilmList?.apply {
+        binding.rvFilmList.apply {
             adapter = FilmsAdapter(list, activity as MainActivity) {
 //                updateData()
             }
@@ -75,7 +80,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateRecyclerView() {
-        binding!!.rvFilmList.adapter = viewModel.filmL.value?.let {
+        binding.rvFilmList.adapter = viewModel.filmL.value?.let {
             FilmsAdapter(it, activity as MainActivity) {
 //                updateData()
             }

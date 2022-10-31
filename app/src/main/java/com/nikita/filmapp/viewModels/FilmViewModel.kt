@@ -3,8 +3,11 @@ package com.nikita.filmapp.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nikita.filmapp.R
 import com.nikita.filmapp.models.Film
+import com.nikita.filmapp.services.api.RetrofitInstance
+import kotlinx.coroutines.launch
 
 class FilmViewModel : ViewModel() {
     private val films = MutableLiveData<MutableList<Film>>()
@@ -26,6 +29,15 @@ class FilmViewModel : ViewModel() {
             )
         )
         films.postValue(tempList)
+    }
+
+    fun getFilm() {
+        viewModelScope.launch {
+            val data = RetrofitInstance.api.getTrending()
+            data.body()?.let {
+                addFirstFilm(title = it.results[0].title)
+            }
+        }
     }
 
 
