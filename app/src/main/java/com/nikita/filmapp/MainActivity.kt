@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.nikita.filmapp.db.MovieDataBase
 import com.nikita.filmapp.repository.MoviesRepository
 import com.nikita.filmapp.viewModels.MovieViewModel
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         //TODO: handle nav fragment
 
-        viewModelFactory = MovieViewModelFactory(MoviesRepository())
+        viewModelFactory = MovieViewModelFactory(MoviesRepository(MovieDataBase(this)))
         val navigationView: BottomNavigationView = findViewById(R.id.navigate)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
@@ -35,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        viewModel.loadFilms()
+        //TODO: turn off to test ROOM
+//        viewModel.loadFilms()
 
     }
 

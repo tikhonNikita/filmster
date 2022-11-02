@@ -11,6 +11,10 @@ import kotlinx.coroutines.launch
 class MovieViewModel(val repository: MoviesRepository) : ViewModel() {
     private val _movies = MutableLiveData<MutableList<Movie>>()
 
+
+    fun getSavedNews() = repository.getSavedNews()
+
+
     val movies: LiveData<MutableList<Movie>>
         get() = _movies
 
@@ -18,12 +22,17 @@ class MovieViewModel(val repository: MoviesRepository) : ViewModel() {
     fun loadFilms() {
         viewModelScope.launch {
             val data = repository.getTrendingMovies()
-            data.body()?.let { addFirstFilm(it.results) }
+            data.body()?.let {
+                setFilms(it.results)
+                it.results.forEach { movie ->
+                    repository.upsert(movie)
+                }
+            }
         }
     }
 
 
-    private fun addFirstFilm(movies: List<Movie>) {
+    private fun setFilms(movies: List<Movie>) {
         _movies.postValue(movies.toMutableList())
     }
 }

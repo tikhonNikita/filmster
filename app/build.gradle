@@ -49,6 +49,20 @@ dependencies {
     def lifecycle_version = "2.6.0-alpha02"
     def arch_version = "2.1.0"
     def lottie_version = "5.2.0"
+    def room_version = "2.4.3"
+
+
+
+    //ROOM
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+
+
+
 
     //GLIDe
     implementation 'com.github.bumptech.glide:glide:4.14.2'

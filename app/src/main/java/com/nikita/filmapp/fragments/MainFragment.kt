@@ -61,7 +61,9 @@ class MainFragment : Fragment() {
 
         }, 2000)
 
-        viewModel.loadFilms()
+        viewModel.getSavedNews().observe(viewLifecycleOwner) {
+            updateRecyclerView(it)
+        }
 
         return binding.root
     }
