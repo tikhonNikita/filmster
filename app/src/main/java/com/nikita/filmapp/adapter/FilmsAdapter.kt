@@ -1,21 +1,22 @@
 package com.nikita.filmapp.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
-import com.nikita.filmapp.models.Film
+import com.nikita.filmapp.models.IMG_URL
+import com.nikita.filmapp.models.Movie
 
 
 private const val TAG = "FILMDS_ADAPTER"
 
 class FilmsAdapter(
-    private val dataSet: List<Film>,
+    private val dataSet: List<Movie>,
     private val mainActivity: MainActivity,
     private val handlePress: () -> Unit
 ) :
@@ -24,15 +25,17 @@ class FilmsAdapter(
 
     inner class FilmViewHolder(private val itemBinding: FilmCardBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(film: Film) {
+        fun bind(film: Movie) {
             itemBinding.apply {
                 tvFilmTitle.text = film.title
-                ivFilmCard.setImageResource(film.image)
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
-//                    Log.d("TAG", "bind: bo to film details")
                     mainActivity.goToDetailsFragment()
                 }
+
+                Glide.with(context).load(IMG_URL + film.poster)
+                    .centerCrop()
+                    .into(ivFilmCard)
                 ibLike.setImageResource(R.drawable.ic_star_like)
 
                 ibLike.setOnClickListener {

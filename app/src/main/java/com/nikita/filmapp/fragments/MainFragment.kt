@@ -16,6 +16,7 @@ import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.databinding.MainFragmentBinding
 import com.nikita.filmapp.models.Film
+import com.nikita.filmapp.models.Movie
 import com.nikita.filmapp.viewModels.MovieViewModel
 
 
@@ -43,8 +44,10 @@ class MainFragment : Fragment() {
         binding.laLoader.playAnimation()
 
         viewModel.movies.observe(viewLifecycleOwner) {
-            it.forEach{
-                Log.d("SEKSON", it.title)
+            if (it.size > 0) {
+                hideLoader()
+                updateRecyclerView(it)
+
             }
         }
 
@@ -86,7 +89,7 @@ class MainFragment : Fragment() {
 //        viewModel.updateFilms()
 //    }
 
-    private fun initRecyclerView(list: List<Film>) {
+    private fun initRecyclerView(list: List<Movie>) {
         binding.rvFilmList.apply {
             adapter = FilmsAdapter(list, activity as MainActivity) {
 //                updateData()
@@ -95,13 +98,14 @@ class MainFragment : Fragment() {
         }
     }
 
-//    private fun updateRecyclerView() {
-//        binding.rvFilmList.adapter = viewModel.filmL.value?.let {
-//            FilmsAdapter(it, activity as MainActivity) {
-////                updateData()
-//            }
-//        }
-//    }
+    private fun updateRecyclerView(movies: List<Movie>) {
+        binding.rvFilmList.apply {
+            adapter = FilmsAdapter(movies, activity as MainActivity) {
+//                updateData()
+            }
+            layoutManager = LinearLayoutManager(activity)
+        }
+    }
 
 
     override fun onDestroyView() {

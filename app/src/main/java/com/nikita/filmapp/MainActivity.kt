@@ -2,17 +2,22 @@ package com.nikita.filmapp
 
 import MovieViewModelFactory
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nikita.filmapp.repository.MoviesRepository
+import com.nikita.filmapp.viewModels.MovieViewModel
+
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModelFactory: MovieViewModelFactory
+    private val viewModel: MovieViewModel by viewModels { this.viewModelFactory }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        viewModel.loadFilms()
 
     }
 
