@@ -10,8 +10,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:showIn="@layout/activity_main_old">
+    app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,46 +21,40 @@
         <ImageView
             android:id="@+id/ivFilmCard"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="330dp"
             android:contentDescription="@string/title"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/batman"
             tools:ignore="ImageContrastCheck" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvFilmTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_weight=".80"
+                android:gravity="start"
+                android:maxLines="3"
+                android:scrollHorizontally="true"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                tools:text="@tools:sample/lorem/random" />
 
-                <TextView
-                    android:layout_weight=".80"
-                    android:gravity="start"
-                    android:scrollHorizontally="true"
-                    android:id="@+id/tvFilmTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    tools:text="@tools:sample/lorem/random"
-                    android:maxLines="3"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-
-                <ImageButton
-                    android:id="@+id/ibLike"
-                    style="@style/Widget.AppCompat.ActionButton"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight=".10"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_star_like" />
-            </LinearLayout>
-
+            <ImageButton
+                android:id="@+id/ibLike"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight=".10"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_star_like" />
         </LinearLayout>
+
 
         <!-- Buttons -->
         <LinearLayout

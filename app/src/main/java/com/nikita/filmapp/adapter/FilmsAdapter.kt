@@ -13,7 +13,6 @@ import com.nikita.filmapp.models.IMG_URL
 import com.nikita.filmapp.models.Movie
 
 
-private const val TAG = "FILMDS_ADAPTER"
 
 class FilmsAdapter(
     private val dataSet: List<Movie>,
@@ -34,7 +33,6 @@ class FilmsAdapter(
                 }
 
                 Glide.with(context).load(IMG_URL + film.poster)
-                    .centerCrop()
                     .into(ivFilmCard)
                 ibLike.setImageResource(R.drawable.ic_star_like)
 
