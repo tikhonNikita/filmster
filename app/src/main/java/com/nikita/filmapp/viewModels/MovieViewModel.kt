@@ -8,11 +8,16 @@ import com.nikita.filmapp.models.Movie
 import com.nikita.filmapp.repository.MoviesRepository
 import kotlinx.coroutines.launch
 
-class MovieViewModel(val repository: MoviesRepository) : ViewModel() {
+class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
     private val _movies = MutableLiveData<MutableList<Movie>>()
+    private val _savedMovies = MutableLiveData<MutableList<Movie>>()
 
 
-    fun getSavedNews() = repository.getSavedNews()
+    fun setFavouriteMovie(movie: Movie) = viewModelScope.launch {
+        repository.upsert(movie)
+    }
+
+    fun getFavouriteMovies() = repository.getSavedNews()
 
 
     val movies: LiveData<MutableList<Movie>>

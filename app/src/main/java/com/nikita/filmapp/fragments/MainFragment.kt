@@ -52,7 +52,6 @@ class MainFragment : Fragment() {
         }
 
 
-        //TODO: make newtwork request here
         viewModel.loadFilms()
 
         return binding.root
