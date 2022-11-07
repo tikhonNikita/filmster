@@ -53,17 +53,7 @@ class MainFragment : Fragment() {
 
 
         //TODO: make newtwork request here
-        val handler = Handler()
-        handler.postDelayed(Runnable {
-            binding.laLoader.visibility = View.INVISIBLE
-
-            binding.rvFilmList.visibility = View.VISIBLE
-
-        }, 2000)
-
-        viewModel.getSavedNews().observe(viewLifecycleOwner) {
-            updateRecyclerView(it)
-        }
+        viewModel.loadFilms()
 
         return binding.root
     }

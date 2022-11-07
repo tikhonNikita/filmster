@@ -36,9 +36,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        //TODO: turn off to test ROOM
-//        viewModel.loadFilms()
-
     }
 
     public fun goToDetailsFragment() {
