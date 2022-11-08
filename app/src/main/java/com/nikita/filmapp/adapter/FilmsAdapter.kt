@@ -17,7 +17,7 @@ import com.nikita.filmapp.models.Movie
 class FilmsAdapter(
     private val dataSet: List<Movie>,
     private val mainActivity: MainActivity,
-    private val handlePress: () -> Unit
+    private val handlePress: (film: Movie) -> Unit
 ) :
     RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
     private lateinit var context: Context
@@ -37,7 +37,7 @@ class FilmsAdapter(
                 ibLike.setImageResource(R.drawable.ic_star_like)
 
                 ibLike.setOnClickListener {
-                    handlePress()
+                    handlePress(film)
                 }
             }
         }

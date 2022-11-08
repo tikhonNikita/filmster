@@ -29,9 +29,6 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
             val data = repository.getTrendingMovies()
             data.body()?.let {
                 setFilms(it.results)
-                it.results.forEach { movie ->
-                    repository.upsert(movie)
-                }
             }
         }
     }
