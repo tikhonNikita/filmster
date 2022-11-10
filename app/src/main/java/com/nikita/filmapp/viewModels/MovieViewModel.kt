@@ -25,11 +25,15 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
 
 
     fun loadFilms() {
-        viewModelScope.launch {
-            val data = repository.getTrendingMovies()
-            data.body()?.let {
-                setFilms(it.results)
+        try {
+            viewModelScope.launch {
+                val data = repository.getTrendingMovies()
+                data.body()?.let {
+                    setFilms(it.results)
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 

@@ -26,7 +26,8 @@
     <string name="supporting_text">Вы действительно хотете выйти?</string>
     <string name="decline">Нет</string>
     <string name="accept">Да</string>
-    <string name="favourites">Избранные</string>
+    <string name="favourites">Сохраненные</string>
     <string name="all_films">Все фильмы</string>
     <string name="the_best_movie_app">Лучшее приложения для фильмов</string>
+    <string name="add_to_fav_text">В избранное</string>
 </resources>

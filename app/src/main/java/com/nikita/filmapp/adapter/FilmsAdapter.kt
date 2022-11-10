@@ -34,11 +34,11 @@ class FilmsAdapter(
 
                 Glide.with(context).load(IMG_URL + film.poster)
                     .into(ivFilmCard)
-                ibLike.setImageResource(R.drawable.ic_star_like)
-
-                ibLike.setOnClickListener {
-                    handlePress(film)
-                }
+//                ibLike.setImageResource(R.drawable.ic_star_like)
+//
+//                ibLike.setOnClickListener {
+//                    handlePress(film)
+//                }
             }
         }
     }
