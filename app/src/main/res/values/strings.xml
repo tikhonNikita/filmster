@@ -30,4 +30,5 @@
     <string name="all_films">All films</string>
     <string name="the_best_movie_app">The best movie app</string>
     <string name="add_to_fav_text">Favourites</string>
+    <string name="film_was_added_to_fav">Favourites</string>
 </resources>

@@ -1,21 +1,17 @@
 package com.nikita.filmapp.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieDrawable
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FilmsAdapter
 import com.nikita.filmapp.databinding.MainFragmentBinding
-import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.Movie
 import com.nikita.filmapp.viewModels.MovieViewModel
 
@@ -92,6 +88,11 @@ class MainFragment : Fragment() {
         binding.rvFilmList.apply {
             adapter = FilmsAdapter(movies, activity as MainActivity) {
                 viewModel.setFavouriteMovie(it)
+                SnackbarHelper.showSnackbar(
+                    requireView(),
+                    getString(R.string.film_was_added_to_fav),
+                    requireActivity().findViewById(R.id.navigate)
+                )
             }
             layoutManager = LinearLayoutManager(activity)
         }
