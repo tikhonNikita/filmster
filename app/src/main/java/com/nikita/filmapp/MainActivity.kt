@@ -14,9 +14,10 @@ import com.nikita.filmapp.viewModels.MovieViewModel
 
 
 /*
-    TODO: 1) Add UI in indication to favourites
-          2) Add ability to remove movies from favourites
-          0) Make card look like https://m2.material.io/components/cards/android#card
+    TODO: 1) Add ability to remove movies from favourites
+          2) Add ability to see details of the movies
+             2.1) Create appropriate UI for details screen
+
 
  */
 class MainActivity : AppCompatActivity() {
