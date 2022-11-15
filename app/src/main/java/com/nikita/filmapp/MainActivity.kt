@@ -16,7 +16,7 @@ import com.nikita.filmapp.viewModels.MovieViewModel
 /*
     TODO: 1) Add ability to remove movies from favourites
           2) Add ability to see details of the movies
-             2.1) Create appropriate UI for details screen
+             2.1) Create appropriate UI for details screen //https://dribbble.com/shots/4230876-Entertainment-App
 
 
  */
