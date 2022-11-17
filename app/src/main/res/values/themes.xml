@@ -19,6 +19,9 @@
         <item name="colorPrimaryVariant">@color/purple_500</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="titleTextColor">@color/white</item>
+        <item name="colorTertiary">#050709</item>
+        <item name="colorOnTertiary">#00008b</item>
+        <item name="colorOnTertiaryContainer">#550000</item>
 <!--        <item name = "android:windowActionBar">false</item>-->
 <!--        <item name = "android:windowNoTitle">true</item>-->
 

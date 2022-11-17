@@ -47,10 +47,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/titleBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp">
+            android:background="#2A9D8F"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
 
 
             <ImageView
@@ -63,13 +65,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/detailsSeparator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="216dp" />
+
             <TextView
                 android:id="@+id/tvDetailsTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:maxLines="2"
                 android:textAppearance="?attr/textAppearanceHeadline4"
-                android:textColor="@android:color/holo_orange_dark"
+                android:textColor="?attr/colorTertiary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="@+id/imageView"
@@ -83,6 +98,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/genre"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnTertiary"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/tvDetailsTitle" />
 
@@ -93,6 +109,7 @@
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:textColor="?attr/colorOnTertiaryContainer"
                 app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
                 app:layout_constraintTop_toTopOf="@+id/tvDetailsGenreLabel"
                 tools:text="Triller,Dramma" />
@@ -105,6 +122,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/release_date"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnTertiary"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreLabel" />
 
@@ -116,6 +134,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:textColor="?attr/colorOnTertiaryContainer"
                 app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
                 app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreValue"
                 tools:text="12.02.1996" />
@@ -128,6 +147,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/rating"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnTertiary"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateLabel" />
 
@@ -140,11 +160,10 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:textColor="?attr/colorOnTertiaryContainer"
                 app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
                 app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateValue"
-                tools:text="7.39"
-
-                />
+                tools:text="7.39" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
