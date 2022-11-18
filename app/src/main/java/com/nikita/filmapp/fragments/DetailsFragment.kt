@@ -2,7 +2,6 @@ package com.nikita.filmapp.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +35,7 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).supportActionBar!!.hide()
 
-        val film = filmLists[0]
+        val film = filmLists[1]
         binding.apply {
             ivDetails.setImageResource(film.image)
             tvDetailsFilmDescription.text = film.description
@@ -50,7 +49,7 @@ class DetailsFragment : Fragment() {
 
                 startActivity(sendIntent)
             }
-            binding.bntSendComments.setOnClickListener {
+            binding.btnRateTheFilm.setOnClickListener {
 
             }
         }

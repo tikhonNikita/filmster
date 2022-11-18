@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="56dp">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -43,88 +44,193 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_200"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvDetailsFilmTitle"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLines="2"
-                android:paddingVertical="8dp"
-                android:textColor="@color/teal_700"
-                android:textSize="20sp"
-                tools:text="@tools:sample/lorem" />
-
-            <TextView
-                android:id="@+id/tvDetailsFilmDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@tools:sample/lorem/random" />
+                android:background="@color/white"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
 
 
-            <Button
-                android:id="@+id/btnAddFriend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:paddingVertical="8dp"
-                android:text="@string/invite_friend" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic" />
 
-
-            <EditText
-                android:id="@+id/etDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="-4dp"
-                android:autofillHints="textNoSuggestions"
-                android:gravity="start"
-                android:hint="@string/please_leave_any_comments_if_yoy_have"
-                android:inputType="text"
-                android:lines="3"
-                android:singleLine="false"
-                android:textAlignment="viewStart"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                tools:context="com.example.pager.MainActivity">
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/detailsSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="216dp" />
 
                 <TextView
+                    android:id="@+id/tvDetailsFilmTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:text="@string/did_you_enjoy_the_movie" />
+                    android:layout_marginStart="16dp"
+                    android:maxLines="2"
+                    android:textAppearance="?attr/textAppearanceHeadline4"
+                    android:textColor="?attr/colorTertiary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView"
+                    tools:text="Batman" />
 
-                <CheckBox
-                    android:id="@+id/cbDetails"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvDetailsGenreLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/genre"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnTertiary"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsFilmTitle" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/tvDetailsGenreValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
+                    app:layout_constraintTop_toTopOf="@+id/tvDetailsGenreLabel"
+                    tools:text="Triller,Dramma" />
 
-            <Button
-                android:id="@+id/bntSendComments"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvReleaseDateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/release_date"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnTertiary"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreLabel" />
+
+                <TextView
+                    android:id="@+id/tvReleaseDateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreValue"
+                    tools:text="12.02.1996" />
+
+                <TextView
+                    android:id="@+id/tvRatingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/rating"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnTertiary"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateLabel" />
+
+
+                <TextView
+                    android:id="@+id/tvRatingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateValue"
+                    tools:text="7.39" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:paddingVertical="8dp"
-                android:text="@string/send_comments_back" />
+                android:background="#E8EBEC"
+                android:minHeight="300dp"
+                android:paddingTop="16dp">
+
+
+                <TextView
+                    android:id="@+id/tvDetailsFilmDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:justificationMode="inter_word"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/lorem/random" />
+
+                <Button
+                    android:id="@+id/btnAddFriend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/invite_friend"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btnRateTheFilm"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsFilmDescription" />
+
+                <Button
+                    android:id="@+id/btnRateTheFilm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/rate_the_film"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddFriend"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsFilmDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>

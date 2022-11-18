@@ -34,4 +34,5 @@
     <string name="genre">Жанр:</string>
     <string name="release_date">Дата выхода:</string>
     <string name="rating">Рейтинг:</string>
+    <string name="rate_the_film">Оценить фильм</string>
 </resources>
