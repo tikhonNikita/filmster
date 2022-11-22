@@ -7,7 +7,8 @@ import com.nikita.filmapp.databinding.FavouriteFilmBinding
 import com.nikita.filmapp.models.Movie
 
 class FavouriteFilmAdapter(
-    private val favorites: List<Movie>
+    val favorites: MutableList<Movie>,
+    val itemsToDelete: MutableList<Movie> = mutableListOf()
 ) : RecyclerView.Adapter<FavouriteFilmViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteFilmViewHolder {
         val binding =

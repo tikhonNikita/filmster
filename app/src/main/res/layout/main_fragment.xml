@@ -8,6 +8,8 @@
         android:id="@+id/rvFilmList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,15 +19,14 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/laLoader"
-        android:visibility="visible"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/cardview_light_background"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline4"
-        app:layout_constraintTop_toTopOf="@id/guideline5"
-        android:background="@color/cardview_light_background"
-        />
+        app:layout_constraintTop_toTopOf="@id/guideline5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"

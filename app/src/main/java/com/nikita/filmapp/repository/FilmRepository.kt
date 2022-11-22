@@ -16,4 +16,6 @@ class MoviesRepository(val db: MovieDataBase) {
 
     fun getSavedNews() = db.getMovieDao().getAllMovies()
 
+    suspend fun removeFromDB(movie: Movie) = db.getMovieDao().deleteMovie(movie)
+
 }

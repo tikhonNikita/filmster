@@ -17,6 +17,10 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         repository.upsert(movie)
     }
 
+    fun removeMovieFromFavourites(movie: Movie) = viewModelScope.launch {
+        repository.removeFromDB(movie)
+    }
+
     fun getFavouriteMovies() = repository.getSavedNews()
 
 

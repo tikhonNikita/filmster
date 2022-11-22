@@ -30,11 +30,10 @@ import kotlin.math.log
 class FavouritesFragment : Fragment() {
     private var _binding: FavouritesFragmentBinding? = null
 
-//    private val viewModel: MovieViewModel by activityViewModels { (activity as MainActivity).viewModelFactory }
-
     private val viewModel: MovieViewModel by activityViewModels { (activity as MainActivity).viewModelFactory }
 
     private val binding get() = _binding!!
+    private lateinit var favouritesAdapter: FavouriteFilmAdapter
 
 
     override fun onCreateView(
@@ -53,31 +52,34 @@ class FavouritesFragment : Fragment() {
         }
     }
 
-
     private fun initOrUpdateRecyclerView(movies: List<Movie> = emptyList()) {
-        val favAdapter = FavouriteFilmAdapter(movies)
-        binding.rvFavouriteFilms.adapter = favAdapter
+        favouritesAdapter = FavouriteFilmAdapter(movies.toMutableList())
+        binding.rvFavouriteFilms.adapter = favouritesAdapter
         binding.rvFavouriteFilms.layoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.grid_columns))
 
         val swipeToDeleteCallback = object : SwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-//                TODO: swipe to delete
-//                val position = viewHolder.adapterPosition
-//                val film = favouriteFilms[position]
-//                favouriteFilms.removeAt(position)
-//                favAdapter.notifyItemRemoved(position)
-//
-//                val message = resources.getString(R.string.deleted_message)
-//                val undo = resources.getString(R.string.snackbar_undo)
-//
-//                Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).apply {
-//                    setAction(undo) {
-//                        favouriteFilms.add(position, film)
-//                        favAdapter.notifyItemInserted(position)
-//                    }.show()
-//                }
+
+                val position = viewHolder.adapterPosition
+                val film = favouritesAdapter.favorites[position]
+                favouritesAdapter.itemsToDelete.add(film)
+                favouritesAdapter.favorites.remove(film)
+                favouritesAdapter.notifyItemRemoved(position)
+
+                val message = resources.getString(R.string.deleted_message)
+                val undo = resources.getString(R.string.snackbar_undo)
+
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).apply {
+                    setAction(undo) {
+                        favouritesAdapter.favorites.add(position, film)
+                        favouritesAdapter.notifyItemInserted(position)
+                        favouritesAdapter.itemsToDelete.removeLast()
+                    }
+                        .setAnchorView(requireActivity().findViewById(R.id.navigate))
+                        .show()
+                }
             }
         }
 
@@ -85,8 +87,9 @@ class FavouritesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.rvFavouriteFilms)
     }
 
-    companion object {
-        public const val TAG = "FavouritesFragment"
+    override fun onPause() {
+        super.onPause()
+        favouritesAdapter.itemsToDelete.map(viewModel::removeMovieFromFavourites)
     }
 
 }

@@ -16,6 +16,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/favourite_film" />
+        tools:listitem="@layout/favourite_film"
+        android:paddingBottom="65dp"
+        android:clipToPadding="false"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
