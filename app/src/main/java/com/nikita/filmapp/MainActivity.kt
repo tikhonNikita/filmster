@@ -15,6 +15,7 @@ import com.nikita.filmapp.viewModels.MovieViewModel
 
 /*
   TODO:     1) Add ability to see details of the movies
+            2) Поиск по тайтлу (лоу приорити)
 
 
  */
