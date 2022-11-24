@@ -9,9 +9,8 @@ import com.bumptech.glide.Glide
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
-import com.nikita.filmapp.models.IMG_URL
 import com.nikita.filmapp.models.Movie
-
+import com.nikita.filmapp.utils.IMG_URL
 
 
 class FilmsAdapter(

@@ -1,5 +1,6 @@
 package com.nikita.filmapp.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,11 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         } catch (e: Exception) {
 
         }
+    }
+
+
+    fun movieDetails(id: Number) {
+        // TODO: Add request to movieDetails
     }
 
 

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nikita.filmapp.databinding.FavouriteFilmBinding
-import com.nikita.filmapp.models.IMG_URL
 import com.nikita.filmapp.models.Movie
+import com.nikita.filmapp.utils.IMG_URL
 
 
 class FavouriteFilmViewHolder(
