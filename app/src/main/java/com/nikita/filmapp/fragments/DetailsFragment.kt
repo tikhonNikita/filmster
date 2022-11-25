@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.databinding.DetailsFragmentBinding
 import com.nikita.filmapp.models.filmLists
+import com.nikita.filmapp.viewModels.MovieDetailsViewModel
 
 
 private const val TAG = "DetailsFragment"
 
 class DetailsFragment : Fragment() {
 
+    private val viewModel: MovieDetailsViewModel by viewModels { (activity as MainActivity).movieDetailsViewModelFactory }
+
     private var _binding: DetailsFragmentBinding? = null
+
 
     private val binding get() = _binding!!
 
@@ -26,6 +31,11 @@ class DetailsFragment : Fragment() {
     ): View {
         _binding = DetailsFragmentBinding.inflate(inflater, container, false)
         (requireActivity() as MainActivity).supportActionBar!!.show()
+        // TODO receive movie ID from previous screen
+        viewModel.getMovieDetails(505642)
+        viewModel.detailedMovie.observe(viewLifecycleOwner) {
+            binding.tvDetailsFilmTitle.text = it.title
+        }
         return binding.root
 
     }

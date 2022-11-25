@@ -23,8 +23,8 @@ class MoviesRepository(val db: MovieDataBase) {
     }
 
 
-    suspend fun getMovieDetails(): Response<DetailedMovie> {
-        return RetrofitInstance.api.getMovieDetails()
+    suspend fun getMovieDetails(movieId: Int): Response<DetailedMovie> {
+        return RetrofitInstance.api.getMovieDetails(movieId)
     }
 
     suspend fun upsert(movie: Movie) = db.getMovieDao().upsert(movie)

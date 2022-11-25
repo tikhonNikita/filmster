@@ -17,7 +17,7 @@ interface MoviesAPI {
     @GET("movie/{movie}")
     suspend fun getMovieDetails(
         @Path("movie")
-        movieId: Number = 505642,
+        movieId: Int,
         @Query("api_key")
         apiKey: String = BuildConfig.MOVIE_API_KEY,
 

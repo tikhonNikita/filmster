@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nikita.filmapp.db.MovieDataBase
 import com.nikita.filmapp.repository.MoviesRepository
+import com.nikita.filmapp.viewModels.MovieDetailsViewModelFactory
 import com.nikita.filmapp.viewModels.MovieViewModel
 
 
@@ -22,7 +23,10 @@ import com.nikita.filmapp.viewModels.MovieViewModel
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModelFactory: MovieViewModelFactory
+    lateinit var movieDetailsViewModelFactory: MovieDetailsViewModelFactory
     private val viewModel: MovieViewModel by viewModels { this.viewModelFactory }
+
+    private lateinit var moviesRepository: MoviesRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +34,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //TODO: handle nav fragment
+        moviesRepository = MoviesRepository(MovieDataBase(this))
 
-        viewModelFactory = MovieViewModelFactory(MoviesRepository(MovieDataBase(this)))
+        viewModelFactory = MovieViewModelFactory(moviesRepository)
+        movieDetailsViewModelFactory = MovieDetailsViewModelFactory(moviesRepository)
         val navigationView: BottomNavigationView = findViewById(R.id.navigate)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment

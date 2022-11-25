@@ -68,17 +68,11 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(listOf())
-//        updateData()
     }
-
-//    private fun updateData() {
-//        viewModel.updateFilms()
-//    }
 
     private fun initRecyclerView(list: List<Movie>) {
         binding.rvFilmList.apply {
             adapter = FilmsAdapter(list, activity as MainActivity) {
-//                updateData()
             }
             layoutManager = LinearLayoutManager(activity)
         }
