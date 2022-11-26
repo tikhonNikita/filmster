@@ -23,5 +23,9 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.nikita.filmapp.fragments.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+        <argument
+            android:name="movieID"
+            app:argType="long" />
+    </fragment>
 </navigation>

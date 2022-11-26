@@ -28,7 +28,7 @@ class FilmsAdapter(
                 tvFilmTitle.text = film.title
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
-                    mainActivity.goToDetailsFragment()
+                    mainActivity.goToDetailsFragment(movieID = film.id)
                 }
 
                 Glide.with(context).load(IMG_URL + film.poster)

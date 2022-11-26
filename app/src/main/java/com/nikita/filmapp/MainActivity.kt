@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nikita.filmapp.db.MovieDataBase
+import com.nikita.filmapp.fragments.MainFragmentDirections
 import com.nikita.filmapp.repository.MoviesRepository
 import com.nikita.filmapp.viewModels.MovieDetailsViewModelFactory
 import com.nikita.filmapp.viewModels.MovieViewModel
@@ -49,11 +50,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    public fun goToDetailsFragment() {
+    public fun goToDetailsFragment(movieID: Long) {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        navController.navigate(R.id.action_mainFragment_to_detailsFragment)
+        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(movieID = movieID)
+        navController.navigate(action)
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.databinding.DetailsFragmentBinding
 import com.nikita.filmapp.models.filmLists
@@ -21,6 +22,8 @@ class DetailsFragment : Fragment() {
 
     private var _binding: DetailsFragmentBinding? = null
 
+    val args: DetailsFragmentArgs by navArgs()
+
 
     private val binding get() = _binding!!
 
@@ -31,8 +34,9 @@ class DetailsFragment : Fragment() {
     ): View {
         _binding = DetailsFragmentBinding.inflate(inflater, container, false)
         (requireActivity() as MainActivity).supportActionBar!!.show()
+        val movieID = args.movieID
         // TODO receive movie ID from previous screen
-        viewModel.getMovieDetails(505642)
+        viewModel.getMovieDetails(movieID)
         viewModel.detailedMovie.observe(viewLifecycleOwner) {
             binding.tvDetailsFilmTitle.text = it.title
         }

@@ -23,7 +23,7 @@ class MoviesRepository(val db: MovieDataBase) {
     }
 
 
-    suspend fun getMovieDetails(movieId: Int): Response<DetailedMovie> {
+    suspend fun getMovieDetails(movieId: Long): Response<DetailedMovie> {
         return RetrofitInstance.api.getMovieDetails(movieId)
     }
 

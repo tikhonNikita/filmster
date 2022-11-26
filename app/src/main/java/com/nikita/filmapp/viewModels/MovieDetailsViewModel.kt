@@ -14,7 +14,7 @@ class MovieDetailsViewModel(private val repository: MoviesRepository) : ViewMode
     val detailedMovie: LiveData<DetailedMovie>
         get() = _detailedMovie
 
-    fun getMovieDetails(movieID: Int) = viewModelScope.launch {
+    fun getMovieDetails(movieID: Long) = viewModelScope.launch {
         val response = repository.getMovieDetails(movieID)
         _detailedMovie.value = response.body()
 
