@@ -8,5 +8,8 @@ data class DetailedMovie(
     val poster: String = "",
     val title: String = "",
     val overview: String = "",
-    val productionCompany: String = ""
+    val productionCompany: String = "",
+    val genres: List<String> = emptyList(),
+    val releaseDate: String = "",
+    val rating: Double = 0.0
 )

@@ -23,13 +23,21 @@ class DetailsMovieDeserializer : JsonDeserializer<DetailedMovie> {
                 val overview = jsonObject.get("overview").asString
                 val productionCompany =
                     jsonObject.get("production_companies").asJsonArray[0].asJsonObject.get("name").asString
+                val genres = jsonObject.get("genres").asJsonArray.map { it.asJsonObject.get("name").asString }
+                val releaseDate = jsonObject.get("release_date").asString
+                val rating = jsonObject.get("vote_average").asDouble
+
                 return DetailedMovie(
                     id = id,
                     backdrop = backdrop,
                     poster = poster,
                     title = title,
                     overview = overview,
-                    productionCompany = productionCompany
+                    productionCompany = productionCompany,
+                    genres = genres,
+                    releaseDate = releaseDate,
+                    rating = rating
+
                 )
             } catch (e: Exception) {
                 Log.e("Deserialisation Error", e.message ?: "")

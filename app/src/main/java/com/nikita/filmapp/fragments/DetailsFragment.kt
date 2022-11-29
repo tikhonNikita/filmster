@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.databinding.DetailsFragmentBinding
+import com.nikita.filmapp.models.DetailedMovie
 import com.nikita.filmapp.models.filmLists
+import com.nikita.filmapp.utils.IMG_URL
 import com.nikita.filmapp.viewModels.MovieDetailsViewModel
 
 
@@ -35,13 +38,24 @@ class DetailsFragment : Fragment() {
         _binding = DetailsFragmentBinding.inflate(inflater, container, false)
         (requireActivity() as MainActivity).supportActionBar!!.show()
         val movieID = args.movieID
-        // TODO receive movie ID from previous screen
         viewModel.getMovieDetails(movieID)
-        viewModel.detailedMovie.observe(viewLifecycleOwner) {
-            binding.tvDetailsFilmTitle.text = it.title
-        }
+        viewModel.detailedMovie.observe(viewLifecycleOwner, ::fillMovie)
         return binding.root
 
+    }
+
+
+    private fun fillMovie(movie: DetailedMovie) {
+        binding.run {
+            tvDetailsFilmTitle.text = movie.title
+            tvDetailsGenreValue.text = movie.genres.joinToString(", ")
+            tvReleaseDateValue.text = movie.releaseDate
+            tvDetailsFilmDescription.text = movie.overview
+            Glide.with(requireContext()).load(IMG_URL + movie.poster)
+                .into(ivDetails)
+            Glide.with(requireContext()).load(IMG_URL + movie.backdrop)
+                .into(ivPoster)
+        }
     }
 
 
