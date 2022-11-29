@@ -51,6 +51,7 @@ class DetailsFragment : Fragment() {
             tvDetailsGenreValue.text = movie.genres.joinToString(", ")
             tvReleaseDateValue.text = movie.releaseDate
             tvDetailsFilmDescription.text = movie.overview
+            tvRatingValue.text = movie.rating.toString()
             Glide.with(requireContext()).load(IMG_URL + movie.poster)
                 .into(ivDetails)
             Glide.with(requireContext()).load(IMG_URL + movie.backdrop)

@@ -64,31 +64,21 @@
 
                 <ImageView
                     android:id="@+id/ivPoster"
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/detailsSeparator"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="ivPoster"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="216dp" />
-
                 <TextView
                     android:id="@+id/tvDetailsFilmTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:autoSizeMaxTextSize="16sp"
+                    android:autoSizeMinTextSize="8sp"
                     android:maxLines="2"
                     android:textAppearance="?attr/textAppearanceHeadline4"
                     android:textColor="?attr/colorTertiary"
@@ -106,43 +96,48 @@
                     android:text="@string/genre"
                     android:textAppearance="?attr/textAppearanceSubtitle2"
                     android:textColor="?attr/colorOnTertiary"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/ivPoster"
                     app:layout_constraintTop_toBottomOf="@+id/tvDetailsFilmTitle" />
 
                 <TextView
                     android:id="@+id/tvDetailsGenreValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:lines="2"
                     android:textColor="?attr/colorOnTertiaryContainer"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
                     app:layout_constraintTop_toTopOf="@+id/tvDetailsGenreLabel"
-                    tools:text="Triller,Dramma" />
+                    app:layout_wrapBehaviorInParent="vertical_only"
+                    tools:text="Triller,Dramma, Triller,Dramma,Triller,Dramma, Triller,Dramma" />
 
                 <TextView
                     android:id="@+id/tvReleaseDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     android:text="@string/release_date"
                     android:textAppearance="?attr/textAppearanceSubtitle2"
                     android:textColor="?attr/colorOnTertiary"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/ivPoster"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreLabel" />
+                    app:layout_constraintTop_toTopOf="@+id/tvReleaseDateValue" />
 
                 <TextView
                     android:id="@+id/tvReleaseDateValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textColor="?attr/colorOnTertiaryContainer"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
+                    app:layout_constraintStart_toStartOf="@+id/tvDetailsGenreValue"
                     app:layout_constraintTop_toBottomOf="@+id/tvDetailsGenreValue"
                     tools:text="12.02.1996" />
 
@@ -155,6 +150,7 @@
                     android:text="@string/rating"
                     android:textAppearance="?attr/textAppearanceSubtitle2"
                     android:textColor="?attr/colorOnTertiary"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/ivPoster"
                     app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateLabel" />
 
@@ -163,12 +159,12 @@
                     android:id="@+id/tvRatingValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textColor="?attr/colorOnTertiaryContainer"
-                    app:layout_constraintStart_toEndOf="@+id/tvReleaseDateLabel"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/tvReleaseDateValue"
                     app:layout_constraintTop_toBottomOf="@+id/tvReleaseDateValue"
                     tools:text="7.39" />
 
