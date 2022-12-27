@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:transitionName="posterTransition"
                 android:id="@+id/ivFilmCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

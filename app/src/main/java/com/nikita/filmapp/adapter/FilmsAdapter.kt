@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.R
 import com.nikita.filmapp.databinding.FilmCardBinding
@@ -25,13 +26,17 @@ class FilmsAdapter(
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(film: Movie) {
             itemBinding.apply {
+                val posterURL = IMG_URL + film.poster
                 tvFilmTitle.text = film.title
                 itemBinding.tvFilmTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
                 btnGoToFilmDetails.setOnClickListener {
-                    mainActivity.goToDetailsFragment(movieID = film.id)
+                    mainActivity.goToDetailsFragment(movieID = film.id, view1 = ivFilmCard, posterURL = posterURL)
                 }
 
-                Glide.with(context).load(IMG_URL + film.poster)
+                Glide.with(context)
+                    .load(posterURL)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(ivFilmCard)
 
                 addToFavourites.setOnClickListener {

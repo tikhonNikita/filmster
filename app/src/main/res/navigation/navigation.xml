@@ -10,11 +10,7 @@
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
@@ -27,5 +23,8 @@
         <argument
             android:name="movieID"
             app:argType="long" />
+        <argument
+            android:name="posterURL"
+            app:argType="string" />
     </fragment>
 </navigation>

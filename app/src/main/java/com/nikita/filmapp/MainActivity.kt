@@ -2,11 +2,15 @@ package com.nikita.filmapp
 
 import MovieViewModelFactory
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.MemoryCategory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nikita.filmapp.db.MovieDataBase
 import com.nikita.filmapp.fragments.MainFragmentDirections
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Glide.get(this).setMemoryCategory(MemoryCategory.HIGH)
 
         //TODO: handle nav fragment
         moviesRepository = MoviesRepository(MovieDataBase(this))
@@ -50,12 +55,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    public fun goToDetailsFragment(movieID: Long) {
+    public fun goToDetailsFragment(movieID: Long, posterURL: String, view1: View) {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(movieID = movieID)
-        navController.navigate(action)
+        val extras = FragmentNavigatorExtras(view1 to "posterTransition")
+        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(
+            movieID = movieID,
+            posterURL = posterURL
+        )
+        navController.navigate(action, extras)
     }
 
 }

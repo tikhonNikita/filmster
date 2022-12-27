@@ -18,14 +18,8 @@ import com.nikita.filmapp.R
 import com.nikita.filmapp.adapter.FavouriteFilm.FavouriteFilmAdapter
 import com.nikita.filmapp.adapter.SwipeToDeleteCallback
 import com.nikita.filmapp.databinding.FavouritesFragmentBinding
-import com.nikita.filmapp.models.Film
 import com.nikita.filmapp.models.Movie
-import com.nikita.filmapp.models.filmLists
-import com.nikita.filmapp.services.api.RetrofitInstance
 import com.nikita.filmapp.viewModels.MovieViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class FavouritesFragment : Fragment() {
     private var _binding: FavouritesFragmentBinding? = null

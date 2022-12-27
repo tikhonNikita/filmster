@@ -1,7 +1,9 @@
 package com.nikita.filmapp.fragments
 
-import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.nikita.filmapp.MainActivity
 import com.nikita.filmapp.databinding.DetailsFragmentBinding
 import com.nikita.filmapp.models.DetailedMovie
-import com.nikita.filmapp.models.filmLists
 import com.nikita.filmapp.utils.IMG_URL
 import com.nikita.filmapp.viewModels.MovieDetailsViewModel
 
@@ -29,6 +35,14 @@ class DetailsFragment : Fragment() {
 
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        postponeEnterTransition()
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +66,6 @@ class DetailsFragment : Fragment() {
             tvReleaseDateValue.text = movie.releaseDate
             tvDetailsFilmDescription.text = movie.overview
             tvRatingValue.text = movie.rating.toString()
-            Glide.with(requireContext()).load(IMG_URL + movie.poster)
-                .into(ivDetails)
             Glide.with(requireContext()).load(IMG_URL + movie.backdrop)
                 .into(ivPoster)
         }
@@ -63,25 +75,33 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).supportActionBar!!.hide()
+        val posterURL = args.posterURL
+        Glide.with(requireContext()).load(posterURL)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                   return false
+                }
 
-        val film = filmLists[1]
-        binding.apply {
-            ivDetails.setImageResource(film.image)
-            tvDetailsFilmDescription.text = film.description
-            tvDetailsFilmTitle.text = film.title
-            tbDetails.title = film.title
-            btnAddFriend.setOnClickListener {
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Go and watch this film \"${film.title}\"")
-                sendIntent.type = "text/plain"
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    startPostponedEnterTransition()
+                    return false
+                }
 
-                startActivity(sendIntent)
-            }
-            binding.btnRateTheFilm.setOnClickListener {
 
-            }
-        }
+            })
+            .into(binding.ivDetails)
+
     }
 
     override fun onDestroy() {

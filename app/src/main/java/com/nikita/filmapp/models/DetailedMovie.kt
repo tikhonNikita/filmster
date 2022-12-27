@@ -1,7 +1,5 @@
 package com.nikita.filmapp.models
 
-import com.google.gson.annotations.SerializedName
-
 data class DetailedMovie(
     val id: Number = 0,
     val backdrop: String = "",
@@ -13,3 +11,4 @@ data class DetailedMovie(
     val releaseDate: String = "",
     val rating: Double = 0.0
 )
+
