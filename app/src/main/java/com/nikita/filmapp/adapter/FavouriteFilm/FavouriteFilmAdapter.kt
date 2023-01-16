@@ -3,6 +3,7 @@ package com.nikita.filmapp.adapter.FavouriteFilm
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nikita.filmapp.compose.FavouriteTitle
 import com.nikita.filmapp.databinding.FavouriteFilmBinding
 import com.nikita.filmapp.models.Movie
 

@@ -3,6 +3,7 @@ package com.nikita.filmapp.adapter.FavouriteFilm
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.nikita.filmapp.compose.FavouriteTitle
 import com.nikita.filmapp.databinding.FavouriteFilmBinding
 import com.nikita.filmapp.models.Movie
 import com.nikita.filmapp.utils.IMG_URL
@@ -16,7 +17,9 @@ class FavouriteFilmViewHolder(
         itemBinding.apply {
             Glide.with(context).load(IMG_URL + film.poster)
                 .into(ivFavFilmPoster)
-            tvFavFilmTitle.text = film.title
+            composeView.setContent { 
+                FavouriteTitle(title = film.title)
+            }
         }
     }
 }
