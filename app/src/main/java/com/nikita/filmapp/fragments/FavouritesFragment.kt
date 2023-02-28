@@ -1,14 +1,11 @@
 package com.nikita.filmapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +17,7 @@ import com.nikita.filmapp.adapter.SwipeToDeleteCallback
 import com.nikita.filmapp.databinding.FavouritesFragmentBinding
 import com.nikita.filmapp.models.Movie
 import com.nikita.filmapp.viewModels.MovieViewModel
+
 
 class FavouritesFragment : Fragment() {
     private var _binding: FavouritesFragmentBinding? = null
